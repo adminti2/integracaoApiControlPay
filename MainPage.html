@@ -11,14 +11,14 @@
 
 <body>
 
-  <!--Application text-->
+  <!--Texto da aplicação-->
   <h1 class="title">
     <img src="./Images/ControlPayLogo.png" alt="Logo do ControlPay" id="controlPayLogo" />
     <br />
     <div id="titleText">Aplicação de exemplo para uso das APIs</div>
   </h1>
 
-  <!--Informative text about the application-->
+  <!--Texto informativo sobre a aplicação-->
   <div class="container">
     <p id="explanationText">Esta aplicação é um exemplo de uso das APIs do ControlPay. para seu uso,
       é recomendado primeiro que se tenha um usuário ativo e configurado no ControlPay, no
@@ -34,17 +34,17 @@
     <button class="button" id="toggleExplanationBtn">Esconder texto</button>
   </div>
 
-  <!--Aesthetic divider-->
+  <!--Divisor estético-->
   <hr />
 
-  <!--Login section-->
+  <!--Secção: Login-->
   <div class="section">
     
     <h1 class="sectionTitle">
       Login
     </h1>
 
-    <!--Informative text: Login and API Keys-->
+    <!--Texto informativo: Login e chave de integração-->
     <div class="container">
       <p class="infoText">Para realizar chamadas ao ControlPay, é preciso ter uma chave de integração. Esta chave de
         integração
@@ -53,31 +53,31 @@
       </p>
     </div>
 
-    <!--Login and API Key-->
+    <!--Login e chave de integração-->
     <div class="container">
 
-      <!--Switch between API Key and Credentials input-->
+      <!--Alternador entre chave de integração e input de credenciais-->
       <div>
         <label for="loginToggleSwitch">Possui chave de integração?</label>
         <input type="checkbox" id="loginToggleSwitch" onchange="toggleButtonLogin()">
       </div>
 
-      <!--API Key input-->
+      <!--Input de chave de integração-->
       <div id="hasApiKey">
         <p>Insira abaixo seu ID de Pessoa e sua chave de integração a ser usada nesta aplicação:</p>
         <label for="personIdInput">ID da Pessoa: </label>
         <input id="personIdInput" type="number" inputmode="numeric" placeholder="12345"></input>
         <br />
         <label for="accessKeyInput">Chave de integração: </label>
+        <br />
         <input id="accessKeyInput" type="text"
           placeholder="**********************************************************************************************************************************"></input>
-        <!--Add Key input-->
         <div class="button-container">
-          <button class="button" id="addKeyBtn">Usar esta chave</button>
+          <button class="button" id="addKeyBtn" onclick="addKey()">Usar esta chave</button>
         </div>
       </div>
 
-      <!--Credentials input-->
+      <!--Input de credenciais-->
       <div id="doesntHaveApiKey">
         <br />
 
@@ -87,7 +87,7 @@
         <label for="userPasswordInput">Senha: </label>
         <input id="userPasswordInput" type="password" placeholder="**********"></input>
 
-        <!--Login button-->
+        <!--Botão de Login-->
         <div class="button-container">
           <button class="button" id="loginBtn" onclick="doLogin()">Login</button>
         </div>
@@ -98,17 +98,17 @@
 
   </div>
 
-  <!--Aesthetic divider-->
+  <!--Divisor estético-->
   <hr />
 
-  <!--Terminal section-->
+  <!--Secção: Terminal-->
   <div class="section">
 
     <h1 class="sectionTitle">
       Terminal
     </h1>
 
-    <!--Informative text: Terminal-->
+    <!--Texto informativo: Terminal-->
     <div class="container">
       <p class="infoText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat eaque molestiae quia
         excepturi rerum, voluptate quasi odit, repellat nam soluta sequi consectetur assumenda vero! Nostrum eius nobis
@@ -116,10 +116,10 @@
       </p>
     </div>
 
-    <!--Terminal selection-->
+    <!--Seleção de Terminal-->
     <div class="container">
 
-      <!--Create terminal button-->
+      <!--Botão para criar Terminal-->
       <div class="button-container">
         <label for="createTerminalBtn">Caso não tenha um terminal, crie-o:</label>
         <button class="button" id="createTerminalBtn">Criar terminal</button>
@@ -139,17 +139,17 @@
 
   </div>
 
-  <!--Aesthetic divider-->
+  <!--Divisor estético-->
   <hr />
 
-  <!--Transactions section-->
+  <!--Secção: Transações-->
   <div class="section">
 
     <h1 class="sectionTitle">
       Transações
     </h1>
 
-    <!--Informative text: terminals and transactions-->
+    <!--Texto informativo: terminais e transações-->
     <div class="container">
       <p class="infoText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, exercitationem odio in
         libero
@@ -201,17 +201,17 @@
 
   </div>
 
-  <!--Aesthetic divider-->
+  <!--Divisor estético-->
   <hr />
 
-  <!--Administrative actions section-->
+  <!--Secção: Administrativas-->
   <div class="section">
 
     <h1 class="sectionTitle">
       Administrativas
     </h1>
 
-    <!--Informative text: Administrative actions-->
+    <!--Texto informativo: Administrativas-->
     <div class="container">
       <p class="infoText">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi voluptatem reprehenderit
         sapiente
@@ -223,7 +223,7 @@
 
     <div class="container">
 
-      <!--Administrative transaction button-->
+      <!--Botão de Administrativas-->
       <div class="button-container">
         <button class="button" id="buttonAdmTransac">Iniciar Administrativa</button>
       </div>
@@ -232,7 +232,7 @@
 
   </div>
 
-  <!--Aesthetic divider-->
+  <!--Divisor estético-->
   <hr />
 
 </body>

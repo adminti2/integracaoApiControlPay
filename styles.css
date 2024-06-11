@@ -1,16 +1,16 @@
-/* Link color */
+/* Cor para links */
 a {
   color: #800080;
 }
 
-/* Page background */
+/* Plano de fundo da página */
 body, html {
   margin: 0;
   padding: 0 0 10px 0;
   /* height: 100%; */
 }
 
-/* Colored backgrounf */
+/* Plano de fundo colorido da página */
 body {
   background-attachment: fixed;
   background-color: #667EFF;
@@ -19,12 +19,12 @@ body {
   min-height: 100%;
 }
 
-/* Divider */
+/* Divisor */
 hr {
   margin: 0 10% 0 10%;
 }
 
-/* Input boxes */
+/* Inputs */
 input {
   background-color: #d2d1ee;
   border-radius: 50px;
@@ -86,24 +86,24 @@ input[type=checkbox]:disabled {
   cursor: not-allowed;
 }
 
-/* Disables arrows on input with number type */
+/* Desabilita as setas de inputs do tipo número */
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
-/* Disables arrows on input with number type */
+/* Desabilita as setas de inputs do tipo número */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-/* Texto color */
+/* Cor para textos */
 label, p {
   color: #FFFFFF;
 }
 
-/* Labels and paragraphs */
+/* Labels, parágrafos e links */
 label, p, a {
   -webkit-text-stroke: 0.5px #000000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -112,6 +112,7 @@ label, p, a {
   text-align: center;
 }
 
+/* Menus dropdown */
 select {
   background-color: #d2d1ee;
   border-radius: 50px;
@@ -121,7 +122,7 @@ select {
   width: 250px;
 }
 
-/* Button class */
+/* Botões */
 .button {
   background-color: #030330;
   border: none;
@@ -134,12 +135,12 @@ select {
   transition: background-color 0.3s;
 }
 
-/* Action while hovering over .button */
+/* Hover de botões */
 .button:hover {
   background-color: #800080;
 }
 
-/* Container for buttons */
+/* Container para botões */
 .button-container {
   align-items: center;
   display: flex;
@@ -148,23 +149,24 @@ select {
   margin: 15px 0 15px 0;
 }
 
-/* Margins for components that are close together */
+/* Margens para componentes que estão próximos */
 .component {
   margin: 20px 0 20px 0;
 }
 
-/* Container for items */
+/* Container para itens */
 .container {
   text-align: center;
   vertical-align:middle;
   margin-bottom: 10px;
 }
 
+/* Secções da página */
 .section {
   margin: 30px 0 30px 0;
 }
 
-/* Page/Section title */
+/* Título da página/secção */
 .title, .sectionTitle {
   color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -172,43 +174,44 @@ select {
   text-align: center;
 }
 
-#accessKey {
+/* Input da chave de integração */
+#accessKeyInput {
   width: 60%;
 }
 
-/* Login button */
+/* Botão de login */
 #buttonLogin {
   color: #FFFFFF;
 }
 
-/* Page Logo */
+/* Logo da página */
 #controlPayLogo {
   width: 300px;
 }
 
-/* Conditional area for API Key */
+/* Área condicional da chave de integração */
 #hasApiKey {
   display: none;
 }
 
-/* Text explaining the application */
+/* Texto explicando a aplicação e funcionalidades dela */
 #explanationText, .infoText {
   display: block;
   margin: 0 20% 20px 20%;
 }
 
-/* Text that accompanies the title */
+/* Texto que acompanha o título */
 #titleText {
   -webkit-text-stroke: 1px black;
 }
 
-/* Button that toggles the display state of #titleText */
+/* Botão que alterna entre os estados de display de #titleText */
 #toggleExplanationBtn {
   cursor: pointer;
   margin-top: 5px;
 }
 
-/* Conditional properties inside #doesntHaveApiKey */
+/* Propriedades condicionais dentro de #doesntHaveApiKey */
 #userCpfCnpj, #userPassword {
   margin-top: 5px;
 }

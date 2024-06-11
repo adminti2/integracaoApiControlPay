@@ -1,27 +1,42 @@
-
 /**
- * API access key.
+ * Chave de integração.
  */
 var apiKey = "";
 
 /**
- * User ID.
+ * ID da Pessoa (usuário).
  */
 var personId = 0;
 
 /**
- * Anonymous function running when the page loads.
+ * Função anônima que roda quando a página carrega.
  */
 (function () {
     toggleButtonLogin();
     toggleExplanationText();
 })();
 
+function addKey() {
+
+}
+
+/**
+ * Loga o usuário no ControlPay, retornando um JSON
+ * com as informações da Pessoa. Essas informações 
+ * são repassadas para as variáveis locais de chave
+ * de acesso "apiKey" e de ID de Pessoa "personId"
+ * para uso posterior.
+ * @returns N/A
+ */
 function doLogin() {
 
     var cpfCnpj = document.getElementById("userCpfCnpjInput").value;
     var userPassword = document.getElementById("userPasswordInput").value;
 
+    if(!cpfCnpj || !userPassword) {
+        alert("Preencha o CPF/CNPJ e a senha antes de realizar o Login!");
+        return;
+    }
 
     const apiUrl = "https://sandbox.controlpay.com.br/webapi/Login/Login";
 
@@ -62,10 +77,10 @@ function doLogin() {
 }
 
 /**
- * Toggle for the Login button.
- * Indicates if the user has or not
- * an API Key to use in the API calls
- * inside this application.
+ * Alterna o login entre a necessidade
+ * de realizar o login e o simples input
+ * das informações que a API retornaria
+ * (caso o usuário já as possua).
  */
 function toggleButtonLogin() {
     var switchButtonLogin = document.getElementById("loginToggleSwitch");
@@ -81,8 +96,9 @@ function toggleButtonLogin() {
 }
 
 /**
- * Toggle for the explanation on the
- * top of the web page.
+ * Alterna entre mostrar ou não a
+ * explicação sobre a aplicação que
+ * está no topo da página principal.
  */
 function toggleExplanationText() {
     const toggleButton = document.getElementById('toggleExplanationBtn');
