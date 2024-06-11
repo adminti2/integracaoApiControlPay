@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo: API ControlPay</title>
+  <link rel="icon" type="image/x-icon" href="./Images/favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!--Application text-->
+  <h1 class="title">
+    <img src="./Images/ControlPayLogo.png" alt="Logo do ControlPay" id="controlPayLogo" />
+    <br />
+    <div id="titleText">Aplicação de exemplo para uso das APIs</div>
+  </h1>
+
+  <!--Informative text about the application-->
+  <div class="container">
+    <p id="explanationText">Esta aplicação é um exemplo de uso das APIs do ControlPay. para seu uso,
+      é recomendado primeiro que se tenha um usuário ativo e configurado no ControlPay, no
+      <a href="https://sandbox.controlpay.com.br" target="_blank">ambiente de Sandbox</a>.
+      <br /><br />Esta aplicação age como uma automação comercial fictícia realizando vendas via API. Sendo
+      assim, é necessário que <b style="color: #800080;">haja um PayGo Windows instalado e configurado</b>.
+      Caso sejam necessárias mais informações, elas serão requisitadas em suas secções abaixo.
+      <br /><br />Também é importante ressaltar que é necessário realizar as ações desta aplicação
+      <b style="color: #800080;">etapa por etapa e em ordem</b>, já que há secções que dependem de
+      outras (as transações dependem da chave adquirida no login, as administrativas ocorrerão no terminal
+      selecionado na secção de transações, e assim por diante).
+    </p>
+    <button class="button" id="toggleExplanationBtn">Esconder texto</button>
+  </div>
+
+  <!--Aesthetic divider-->
+  <hr />
+
+  <!--Login section-->
+  <div class="section">
+    
+    <h1 class="sectionTitle">
+      Login
+    </h1>
+
+    <!--Informative text: Login and API Keys-->
+    <div class="container">
+      <p class="infoText">Para realizar chamadas ao ControlPay, é preciso ter uma chave de integração. Esta chave de
+        integração
+        pode ser adquirida usando o login de usuário (sendo uma chave que expirará em, aproximadamente, um dia),
+        ou pode ser cadastrada no portal ControlPay (tendo um tempo de expiração maleável, ou até podendo não expirar).
+      </p>
+    </div>
+
+    <!--Login and API Key-->
+    <div class="container">
+
+      <!--Switch between API Key and Credentials input-->
+      <div>
+        <label for="loginToggleSwitch">Possui chave de integração?</label>
+        <input type="checkbox" id="loginToggleSwitch" onchange="toggleButtonLogin()">
+      </div>
+
+      <!--API Key input-->
+      <div id="hasApiKey">
+        <p>Insira abaixo seu ID de Pessoa e sua chave de integração a ser usada nesta aplicação:</p>
+        <label for="personIdInput">ID da Pessoa: </label>
+        <input id="personIdInput" type="number" inputmode="numeric" placeholder="12345"></input>
+        <br />
+        <label for="accessKeyInput">Chave de integração: </label>
+        <input id="accessKeyInput" type="text"
+          placeholder="**********************************************************************************************************************************"></input>
+        <!--Add Key input-->
+        <div class="button-container">
+          <button class="button" id="addKeyBtn">Usar esta chave</button>
+        </div>
+      </div>
+
+      <!--Credentials input-->
+      <div id="doesntHaveApiKey">
+        <br />
+
+        <label for="userCpfCnpjInput">CPF/CNPJ: </label>
+        <input id="userCpfCnpjInput" type="text" placeholder="012.345.678-90"></input>
+        <br />
+        <label for="userPasswordInput">Senha: </label>
+        <input id="userPasswordInput" type="password" placeholder="**********"></input>
+
+        <!--Login button-->
+        <div class="button-container">
+          <button class="button" id="loginBtn" onclick="doLogin()">Login</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--Aesthetic divider-->
+  <hr />
+
+  <!--Terminal section-->
+  <div class="section">
+
+    <h1 class="sectionTitle">
+      Terminal
+    </h1>
+
+    <!--Informative text: Terminal-->
+    <div class="container">
+      <p class="infoText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat eaque molestiae quia
+        excepturi rerum, voluptate quasi odit, repellat nam soluta sequi consectetur assumenda vero! Nostrum eius nobis
+        quo officia nisi?
+      </p>
+    </div>
+
+    <!--Terminal selection-->
+    <div class="container">
+
+      <!--Create terminal button-->
+      <div class="button-container">
+        <label for="createTerminalBtn">Caso não tenha um terminal, crie-o:</label>
+        <button class="button" id="createTerminalBtn">Criar terminal</button>
+      </div>
+
+      <div class="component">
+        <label for="terminalSelect">Escolha um terminal disponível para realizar um transação:</label>
+      </div>
+
+      <div class="component">
+        <select name="terminalSelect">
+          <option value="0">Nenhum terminal disponível</option>
+        </select>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--Aesthetic divider-->
+  <hr />
+
+  <!--Transactions section-->
+  <div class="section">
+
+    <h1 class="sectionTitle">
+      Transações
+    </h1>
+
+    <!--Informative text: terminals and transactions-->
+    <div class="container">
+      <p class="infoText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, exercitationem odio in
+        libero
+        consequatur minima aliquid rem laboriosam fugiat corrupti itaque reprehenderit quidem officiis maxime iusto
+        necessitatibus neque nostrum? A.
+      </p>
+    </div>
+
+    <div class="container">
+
+      <div class="component">
+        <label for="paymentMethodSelect">Escolha uma forma de pagamento:</label>
+      </div>
+
+      <div class="component">
+        <select name="paymentMethodSelect">
+          <option value="21">TEF Crédito</option>
+          <option value="22">TEF Débito</option>
+          <option value="23">TEF Voucher</option>
+          <option value="24">TEF Outros</option>
+          <option value="25">TEF Carteira Digital</option>
+          <option value="51">Link de pagamento Crédito</option>
+          <option value="52">Link de pagamento Débito</option>
+          <option value="53">Boleto</option>
+          <option value="11">POS Crédito</option>
+          <option value="12">POS Débito</option>
+          <option value="13">POS Voucher</option>
+          <option value="41">Dinheiro</option>
+        </select>
+      </div>
+
+      <!--TODO Allan: criar switch venda por valor e venda por produto-->
+
+      <div class="component">
+        <label for="transactionValueInput">Valor da transação: </label>
+        <input id="transactionValueInput" type="number" inputmode="numeric" placeholder="10,00"></input>
+      </div>
+
+      <div class="component">
+        <label for="startAutoSwitch">Iniciar transação automaticamente?</label>
+        <input type="checkbox" id="startAutoSwitch">
+      </div>
+
+      <div class="button-container">
+        <button class="button" id="startTransactionBtn">Transacionar</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--Aesthetic divider-->
+  <hr />
+
+  <!--Administrative actions section-->
+  <div class="section">
+
+    <h1 class="sectionTitle">
+      Administrativas
+    </h1>
+
+    <!--Informative text: Administrative actions-->
+    <div class="container">
+      <p class="infoText">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi voluptatem reprehenderit
+        sapiente
+        totam eos repellat vero? Voluptas beatae, rerum veniam, consequuntur libero odio tenetur asperiores illo iusto
+        maxime
+        aliquid reiciendis.
+      </p>
+    </div>
+
+    <div class="container">
+
+      <!--Administrative transaction button-->
+      <div class="button-container">
+        <button class="button" id="buttonAdmTransac">Iniciar Administrativa</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--Aesthetic divider-->
+  <hr />
+
+</body>
+
+<script src="MainPage.js"></script>
+
+</html>
