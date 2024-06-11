@@ -16,8 +16,25 @@ var personId = 0;
     toggleExplanationText();
 })();
 
+/**
+ * Guarda a chave de integração e o
+ * ID de Pessoa fornecidos para uso
+ * em chamadas de API posteriores.
+ * @returns 
+ */
 function addKey() {
+    var personIdInput = document.getElementById("personIdInput").value;
+    var accessKeyInput = document.getElementById("accessKeyInput").value;
 
+    if(!personIdInput || !accessKeyInput) {
+        alert("Preencha o ID da pessoa e a chave de integração antes de adicionar a chave a ser usada pela aplicação!");
+        return;
+    }
+
+    personId = personIdInput;
+    apiKey = accessKeyInput;
+
+    alert("ID " + personId + " de pessoa e chave " + apiKey + " prontos para uso nas outras secções desta aplicação.");
 }
 
 /**

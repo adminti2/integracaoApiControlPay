@@ -110,14 +110,18 @@
 
     <!--Texto informativo: Terminal-->
     <div class="container">
-      <p class="infoText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat eaque molestiae quia
-        excepturi rerum, voluptate quasi odit, repellat nam soluta sequi consectetur assumenda vero! Nostrum eius nobis
-        quo officia nisi?
+      <p class="infoText">Para realizar transações no ControlPay, é necessário possuir um terminal (e no caso de transações
+        TEF, ele deve estar associado ao ponto de captura desejado). Terminais são como direcionamos as transações para os locais
+        corretos na plataforma. É importante ressaltar que, no caso de transações TEF, é necessário que o PayGo Windows esteja
+        aberto na máquina em que estiver instalado e que tenha sido ativado com o ponto de captura que será usado.
       </p>
     </div>
 
     <!--Seleção de Terminal-->
     <div class="container">
+
+      <!--TODO: adicionar select com os terminais físicos da Pessoa para escolher qual será vinculado a um terminal novo-->
+      <!--TODO: adicionar vinculo com PDC na criação do terminal-->
 
       <!--Botão para criar Terminal-->
       <div class="button-container">
@@ -181,7 +185,7 @@
         </select>
       </div>
 
-      <!--TODO Allan: criar switch venda por valor e venda por produto-->
+      <!--TODO: criar switch venda por valor e venda por produto-->
 
       <div class="component">
         <label for="transactionValueInput">Valor da transação: </label>
