@@ -24,6 +24,11 @@ hr {
   margin: 0 10% 0 10%;
 }
 
+/* Cor para texto em itálico */
+i {
+  color: #380e38;
+}
+
 /* Inputs */
 input {
   background-color: #d2d1ee;
@@ -99,17 +104,26 @@ input::-webkit-inner-spin-button {
 }
 
 /* Cor para textos */
-label, p {
+label, p, ul, li {
   color: #FFFFFF;
 }
 
-/* Labels, parágrafos e links */
-label, p, a {
+/* Labels, parágrafos, listas e links */
+label, p, ul, li, a {
   -webkit-text-stroke: 0.5px #000000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 25px;
   font-weight: bold;
   text-align: center;
+}
+
+/* Tamanho do texto */
+label, p, a {
+  font-size: 25px;
+}
+
+/* Tamanho do texto em listas */
+ul, li {
+  font-size: 20px;
 }
 
 /* Menus dropdown */
@@ -195,7 +209,7 @@ select {
 }
 
 /* Texto explicando a aplicação e funcionalidades dela */
-#explanationText, .infoText {
+#explanationText, .infoText, ul, li {
   display: block;
   margin: 0 20% 20px 20%;
 }

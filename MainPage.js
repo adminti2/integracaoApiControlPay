@@ -146,7 +146,7 @@ function CreateTerminal() {
 
       alert("Terminal " + data.terminal.nome + " [ID: " + data.terminal.id + "] criado e salvo com sucesso!");
 
-      PopulateTerminalSelect();
+      PopulateTerminalSelect(data.terminal.id);
     })
     .catch((error) => {
       throw new Error(error);
@@ -246,12 +246,16 @@ function KeyUpOnInputToSubmit(input, button) {
  * Popula o select de Terminal
  * usado para escolher o terminal
  * que será usado para transações.
+ * @param {number} selectedTerminalId ID do Terminal que deve
+ * constar como escolhido (caso esteja dentro do select). Esta
+ * propriedade só é enviada no caso de ter ocorrido a criação de
+ * um novo Terminal.
  */
-function PopulateTerminalSelect() {
-  var selectPdC = document.getElementById("terminalSelect");
+function PopulateTerminalSelect(selectedTerminalId) {
+  var selectTerminal = document.getElementById("terminalSelect");
 
   //Removendo as opções que o select já tinha anteriormente.
-  selectPdC.innerHTML = "";
+  selectTerminal.innerHTML = "";
 
   //Populando o select com os terminais da Pessoa no ControlPay
   const apiUrl =
@@ -290,7 +294,7 @@ function PopulateTerminalSelect() {
         let opt = document.createElement("option");
         opt.value = 0;
         opt.innerHTML = "Nenhum terminal disponível";
-        selectPdC.append(opt);
+        selectTerminal.append(opt);
 
         return;
       }
@@ -302,14 +306,25 @@ function PopulateTerminalSelect() {
         opt.value = terminal.id;
         opt.innerHTML =
           "[ID: " + terminal.id + "] " + terminal.nome;
-        selectPdC.append(opt);
+          selectTerminal.append(opt);
       });
+
+      return selectTerminal;
+    })
+    .then((select) => {
+      //Caso a chamada desta função tenha se originado da criação de um
+      //terminal, coloca o terminal como o escolhido (na variável global
+      //e no select de Terminal).
+      if(select && selectedTerminalId) {
+        terminalId = selectedTerminalId;
+        document.getElementById("terminalSelect").value = selectedTerminalId;
+      }
     })
     .catch((error) => {
       let opt = document.createElement("option");
       opt.value = 0;
       opt.innerHTML = "Nenhum terminal disponível";
-      selectPdC.append(opt);
+      selectTerminal.append(opt);
 
       throw new Error(error);
     });
