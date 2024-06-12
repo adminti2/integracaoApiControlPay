@@ -139,7 +139,7 @@
       </div>
 
       <div class="component">
-        <select name="terminalSelect" id="terminalSelect">
+        <select name="selectForTerminals" id="terminalSelect" onchange="TerminalSelectOptionSelected()">
           <option value="0">Nenhum terminal disponível</option>
         </select>
       </div>
@@ -158,28 +158,38 @@
       Transações
     </h1>
 
-    <!--Texto informativo: terminais e transações-->
+    <!--Texto informativo: transações-->
     <div class="container">
-      <p class="infoText">Para realizar transações no ControlPay, algumas coisas são importantes:</p>
+      <p class="infoText">
+        Para realizar transações no ControlPay, algumas coisas são importantes:
+      </p>
       <ul>
-        <li>É preciso ter tido sua <i>conta configurada para permitir vendas</i>.
+        <li>
+          É preciso ter tido sua <i>conta configurada para permitir vendas</i>.
           Isso é realizado pelo nosso time de relacionamento com o desenvolvedor.
-          Caso ainda não tenha entrado em contato, peça que realizem estas configurações;</li>
-        <li>É preciso ter realizado as etapas anteriores deste exemplo
+          Caso ainda não tenha entrado em contato, peça que realizem estas configurações;
+        </li>
+        <li>
+          É preciso ter realizado as etapas anteriores deste exemplo
           <i>resgate da chave de integração</i> que permite usar as APIs,
           ter um <i>PayGo Windows instalado</i> (para uso TEF) e ter
-          <i>um terminal pronto para uso no ControlPay</i>.</li>
+          <i>um terminal pronto para uso no ControlPay</i>.
+        </li>
       </ul>
+      <p class="infoText">
+        Com tudo preparado, é possível realizar transações escolhendo os parâmetros
+        abaixo e clicando no botão para transacionar.
+      </p>
     </div>
 
     <div class="container">
 
+      <!--Formas de pagamento-->
       <div class="component">
         <label for="paymentMethodSelect">Escolha uma forma de pagamento:</label>
       </div>
-
       <div class="component">
-        <select name="paymentMethodSelect">
+        <select id="paymentMethodSelect">
           <option value="21">TEF Crédito</option>
           <option value="22">TEF Débito</option>
           <option value="23">TEF Voucher</option>
@@ -197,18 +207,27 @@
 
       <!--TODO: criar switch venda por valor e venda por produto-->
 
+      <!--Valor da transação-->
       <div class="component">
         <label for="transactionValueInput">Valor da transação: </label>
         <input id="transactionValueInput" type="number" inputmode="numeric" placeholder="10,00"></input>
       </div>
 
+      <p class="infoText">
+        Transações podem ser iniciadas automaticamente (iniciando o processamento no
+        PayGo Windows assim que possível) ou não (deixando que o usuário as inicie na
+        tela de "Transações" do próprio PGWin). O checkbox abaixo indica esta exata configuração.
+      </p>
+
+      <!--Iniciar automaticamente-->
       <div class="component">
         <label for="startAutoSwitch">Iniciar transação automaticamente?</label>
         <input type="checkbox" id="startAutoSwitch">
       </div>
 
+      <!--Botão de início da transação-->
       <div class="button-container">
-        <button class="button" id="startTransactionBtn">Transacionar</button>
+        <button class="button" id="startTransactionBtn" onclick="Vender()">Transacionar</button>
       </div>
 
     </div>

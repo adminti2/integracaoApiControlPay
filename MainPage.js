@@ -274,6 +274,7 @@ function PopulateTerminalSelect(selectedTerminalId) {
   //Chamada para a API Terminal/GetByPessoaId.
   fetch(apiUrl, requestOptions)
     .then((response) => {
+
       if (!response.ok) {
 
         alert("Não foi possível realizar a chamada para encontrar os terminais disponíveis. Verifique se o Login ou a adição da chave de integração foi realizada corretamente.");
@@ -318,6 +319,9 @@ function PopulateTerminalSelect(selectedTerminalId) {
       if(select && selectedTerminalId) {
         terminalId = selectedTerminalId;
         document.getElementById("terminalSelect").value = selectedTerminalId;
+      }
+      else {
+        terminalId = document.getElementById("terminalSelect").value;
       }
     })
     .catch((error) => {
@@ -407,6 +411,15 @@ function PopulateTerminalFisicoSelect() {
 }
 
 /**
+ * Função que ocorre a cada mudança (OnChange)
+ * no select de Terminal, permitindo mudar a global
+ * terminalId.
+ */
+function TerminalSelectOptionSelected() {
+  terminalId = document.getElementById("terminalSelect").value;
+}
+
+/**
  * Alterna o login entre a necessidade
  * de realizar o login e o simples input
  * das informações que a API retornaria
@@ -443,4 +456,17 @@ function ToggleExplanationText() {
       toggleButton.textContent = "Mostrar texto explicativo";
     }
   });
+}
+
+/**
+ * Chamada de venda no ControlPay.
+ */
+function Vender() {
+  
+  if(!apiKey || !personId || !terminalId) {
+    alert("Realize as etapas anteriores deste exemplo primeiro para que a chave de integração, ID da Pessoa e ID do terminal possam ser preenchidos.");
+    return;
+  }
+
+  //TODO Chamada à API Venda/Vender.
 }
