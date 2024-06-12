@@ -200,6 +200,12 @@ select {
   margin: 0 20% 20px 20%;
 }
 
+/* Tamanho ajustável para selects de terminal e terminal físico */
+#terminalFisicoSelect, #terminalSelect {
+  width: auto;
+  max-width: 50%;
+}
+
 /* Texto que acompanha o título */
 #titleText {
   -webkit-text-stroke: 1px black;

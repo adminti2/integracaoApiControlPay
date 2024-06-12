@@ -59,7 +59,7 @@
       <!--Alternador entre chave de integração e input de credenciais-->
       <div>
         <label for="loginToggleSwitch">Possui chave de integração?</label>
-        <input type="checkbox" id="loginToggleSwitch" onchange="toggleButtonLogin()">
+        <input type="checkbox" id="loginToggleSwitch" onchange="ToggleButtonLogin()">
       </div>
 
       <!--Input de chave de integração-->
@@ -73,7 +73,7 @@
         <input id="accessKeyInput" type="text"
           placeholder="**********************************************************************************************************************************"></input>
         <div class="button-container">
-          <button class="button" id="addKeyBtn" onclick="addKey()">Usar esta chave</button>
+          <button class="button" id="addKeyBtn" onclick="AddKey()">Usar esta chave</button>
         </div>
       </div>
 
@@ -89,7 +89,7 @@
 
         <!--Botão de Login-->
         <div class="button-container">
-          <button class="button" id="loginBtn" onclick="doLogin()">Login</button>
+          <button class="button" id="loginBtn" onclick="DoLogin()">Login</button>
         </div>
 
       </div>
@@ -120,13 +120,18 @@
     <!--Seleção de Terminal-->
     <div class="container">
 
-      <!--TODO: adicionar select com os terminais físicos da Pessoa para escolher qual será vinculado a um terminal novo-->
-      <!--TODO: adicionar vinculo com PDC na criação do terminal-->
-
       <!--Botão para criar Terminal-->
       <div class="button-container">
-        <label for="createTerminalBtn">Caso não tenha um terminal, crie-o:</label>
-        <button class="button" id="createTerminalBtn">Criar terminal</button>
+        <label class="infoText" for="createTerminalBtn">Caso não tenha um terminal, selecione um terminal físico (que representa
+          o ponto de captura, PdC, no ControlPay) a ser usado e,
+          então, clique no botão para criar um terminal relacionado a este PDC.
+          <br /><br />
+          <i>Importante: selecione <b>o terminal físico que foi ativado no PayGo Windows</b> caso for usar as formas de pagamento TEF!</i>
+        </label>
+          <select name="terminalFisicoSelect" id="terminalFisicoSelect">
+            <option value="0">Nenhum PdC disponível</option>
+          </select>
+        <button class="button" id="createTerminalBtn" onclick="CreateTerminal()">Criar terminal</button>
       </div>
 
       <div class="component">
@@ -134,7 +139,7 @@
       </div>
 
       <div class="component">
-        <select name="terminalSelect">
+        <select name="terminalSelect" id="terminalSelect">
           <option value="0">Nenhum terminal disponível</option>
         </select>
       </div>
