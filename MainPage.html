@@ -20,16 +20,25 @@
 
   <!--Texto informativo sobre a aplicação-->
   <div class="container">
-    <p id="explanationText">Esta aplicação é um exemplo de uso das APIs do ControlPay. para seu uso,
-      é recomendado primeiro que se tenha um usuário ativo e configurado no ControlPay, no
-      <a href="https://sandbox.controlpay.com.br" target="_blank">ambiente de Sandbox</a>.
-      <br /><br />Esta aplicação age como uma automação comercial fictícia realizando vendas via API. Sendo
+    <p id="explanationText">
+      Esta aplicação é um exemplo de uso das APIs do ControlPay. para seu uso,
+      é necessário primeiro que se tenha um usuário ativo e configurado no ControlPay, no
+      <a href="https://sandbox.controlpay.com.br" target="_blank">ambiente de Sandbox</a>
+      (e também é recomendado que o portal esteja aberto para uso conjunto com este exemplo,
+      para que haja uma maior clareza dos conceitos aqui mostrados).
+      <br /><br />
+      Esta aplicação age como uma automação comercial fictícia realizando vendas via API. Sendo
       assim, é necessário que <b style="color: #800080;">haja um PayGo Windows instalado e configurado</b>.
       Caso sejam necessárias mais informações, elas serão requisitadas em suas secções abaixo.
-      <br /><br />Também é importante ressaltar que é necessário realizar as ações desta aplicação
+      <br /><br />
+      Também é importante ressaltar que é necessário realizar as ações desta aplicação
       <b style="color: #800080;">etapa por etapa e em ordem</b>, já que há secções que dependem de
       outras (as transações dependem da chave adquirida no login, as administrativas ocorrerão no terminal
       selecionado na secção de transações, e assim por diante).
+      <br /><br />
+        Durante o uso deste exemplo, mantenha a janela de ferramentas do desenvolvedor do seu navegador
+        aberta. As respostas de chamadas às APIs serão logadas no console, facilitando a sua visualização
+        (podendo também ser vistas na aba "Network"/"Rede").
     </p>
     <button class="button" id="toggleExplanationBtn">Esconder texto</button>
   </div>
@@ -246,19 +255,31 @@
 
     <!--Texto informativo: Administrativas-->
     <div class="container">
-      <p class="infoText">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi voluptatem reprehenderit
-        sapiente
-        totam eos repellat vero? Voluptas beatae, rerum veniam, consequuntur libero odio tenetur asperiores illo iusto
-        maxime
-        aliquid reiciendis.
+      <p class="infoText">
+        O ControlPay também suporta chamadas de transações administrativas para TEF, utilizando
+        o PayGo Windows. Para esta etapa, será preciso utilizar a senha técnica cadastrada
+        no ControlPay. Caso não tenha cadastrado uma senha técnica, não preencha a caixa abaixo,
+        assim usaremos uma senha padrão.
       </p>
     </div>
 
     <div class="container">
 
+      <!--Senha técnica para Administrativas-->
+      <div>
+        <label for="technicalPassword">Senha técnica: </label>
+        <input id="technicalPassword" type="number" inputmode="numeric" placeholder="123456"></input>
+      </div>
+
+      <!--Iniciar automaticamente-->
+      <div class="component">
+        <label for="startAdminSwitch">Iniciar administrativa automaticamente?</label>
+        <input type="checkbox" id="startAdminSwitch">
+      </div>
+
       <!--Botão de Administrativas-->
       <div class="button-container">
-        <button class="button" id="buttonAdmTransac">Iniciar Administrativa</button>
+        <button class="button" id="buttonAdmTransac" onclick="InsertAdmin()">Iniciar Administrativa</button>
       </div>
 
     </div>

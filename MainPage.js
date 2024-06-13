@@ -71,21 +71,27 @@ function AddKey() {
  * anteriormente.
  */
 function CreateTerminal() {
-
-  if(!personId) {
-    alert("Faça login ou adicione uma chave de integração antes de criar um Terminal!");
+  if (!personId) {
+    alert(
+      "Faça login ou adicione uma chave de integração antes de criar um Terminal!"
+    );
     return;
   }
 
   var tfId = document.getElementById("terminalFisicoSelect").value;
 
-  if(tfId == 0 || tfId == "undefined") {
-    alert("Para criar um Terminal, é preciso primeiro ter um Terminal Físico cadastrado. Requisite a criação de um Terminal Físico.");
+  if (tfId == 0 || tfId == "undefined") {
+    alert(
+      "Para criar um Terminal, é preciso primeiro ter um Terminal Físico cadastrado. Requisite a criação de um Terminal Físico."
+    );
     return;
   }
 
   //Endpoint para criação/modificação de terminais
-  const apiUrl = "https://sandbox.controlpay.com.br/webapi/Terminal/Insert?key=" + apiKey;
+  const apiUrl =
+    "https://sandbox.controlpay.com.br/webapi/Terminal/Insert?key=" + apiKey;
+
+  console.log("URL da chamada: " + apiUrl);
 
   //Body da requisição de Login
   const terminalBody = {
@@ -103,7 +109,7 @@ function CreateTerminal() {
     permiteAcrescimo: false,
     solicitarCliente: false,
     solicitarReferencia: false,
-    
+
     //Identificador TEF é uma propriedade referente
     //a configurações de multi-EC. Sendo assim, não
     //é necessária para este exemplo.
@@ -125,26 +131,40 @@ function CreateTerminal() {
     body: JSON.stringify(terminalBody),
   };
 
+  console.log("Body da chamada: " + requestOptions.body);
+
   //Chamada para a API Terminal/Insert.
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (!response.ok) {
+        alert(
+          'Não foi possível realizar a chamada de criação de Terminal. Verifique a aba "Network" das ferramentas do desenvolvedor para mais informações sobre o erro retornadas pela API.'
+        );
+
         throw new Error(
-          "Não foi possível realizar a chamada de criação de Terminal. Verifique a aba \"Network\" das ferramentas do desenvolvedor para mais informações sobre o erro retornadas pela API."
+          "A chamada retornou status: " +
+            response.status +
+            '. É possível verificar mais informações da chamada na aba "Network" da janela de ferramentas do desenvolvedor do navegador.'
         );
       }
-  
+
       return response.json();
     })
     .then((data) => {
       //Logando informações no console para que o usuário
       //possa visualizar as respostas da API.
       console.log(data);
-      
+
       //Salvando informações do terminal (ID).
       terminalId = data.terminal.id;
 
-      alert("Terminal " + data.terminal.nome + " [ID: " + data.terminal.id + "] criado e salvo com sucesso!");
+      alert(
+        "Terminal " +
+          data.terminal.nome +
+          " [ID: " +
+          data.terminal.id +
+          "] criado e salvo com sucesso!"
+      );
 
       PopulateTerminalSelect(data.terminal.id);
     })
@@ -161,7 +181,6 @@ function CreateTerminal() {
  * para uso posterior.
  */
 function DoLogin() {
-
   //Inputs para Login
   var cpfCnpj = document.getElementById("userCpfCnpjInput").value;
   var userPassword = document.getElementById("userPasswordInput").value;
@@ -173,6 +192,8 @@ function DoLogin() {
 
   //Endpoint de Login
   const apiUrl = "https://sandbox.controlpay.com.br/webapi/Login/Login";
+
+  console.log("URL da chamada: " + apiUrl);
 
   //Body da requisição de Login
   const loginBody = {
@@ -187,6 +208,8 @@ function DoLogin() {
     },
     body: JSON.stringify(loginBody),
   };
+
+  console.log("Body da chamada: " + requestOptions.body);
 
   //Chamada para a API Login/Login
   fetch(apiUrl, requestOptions)
@@ -221,6 +244,92 @@ function DoLogin() {
       //Populando o select de Terminais para uso nas
       //outras secções da aplicação.
       PopulateTerminalSelect();
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
+}
+
+/**
+ * Chamada de transação administrativa
+ * no ControlPay.
+ */
+function InsertAdmin() {
+
+  if (!apiKey || !personId || !terminalId) {
+    alert(
+      "Realize as etapas anteriores deste exemplo primeiro para que a chave de integração, ID da Pessoa e ID do terminal possam ser preenchidos."
+    );
+    return;
+  }
+
+  var startAdminAuto = document.getElementById("startAdminSwitch").checked;
+  var techPassword = document.getElementById("technicalPassword").value;
+
+  //A senha técnica não é necessária nessa chamada caso ela
+  //não tenha sido cadastrada. Contudo, é padrão do nosso
+  //relacionamento com desenvolvedor cadastrar esta como
+  //uma senha padrão: "314159". Sendo assim, caso não tenha
+  //sido cadastrada uma nova senha, este valor será usado para esta chamada.
+  if(!techPassword) {
+    techPassword = "314159";
+  }
+
+  //Endpoint de Login
+  const apiUrl =
+    "https://sandbox.controlpay.com.br/webapi/PagamentoExterno/InsertPagamentoExternoTipoAdmin?key=" + apiKey;
+
+  console.log("URL da chamada: " + apiUrl);
+
+  //Body da requisição de Login
+  const adminBody = {
+    terminalId: terminalId,
+    senhaTecnica: techPassword,
+    aguardarTefIniciarTransacao: startAdminAuto
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(adminBody),
+  };
+
+  console.log("Body da chamada: " + requestOptions.body);
+
+  //Chamada para a API Terminal/Insert.
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        alert(
+          'Não foi possível realizar uma administrativa. Verifique a aba "Network" das ferramentas do desenvolvedor para mais informações sobre o erro retornadas pela API.'
+        );
+
+        throw new Error(
+          "A chamada retornou status: " +
+            response.status +
+            '. É possível verificar mais informações da chamada na aba "Network" da janela de ferramentas do desenvolvedor do navegador.'
+        );
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+
+      //Logando informações no console para que o usuário
+      //possa visualizar as respostas da API.
+      console.log(data);
+
+      alert("Transação administrativa iniciada!\r\nVerifique o PayGo Windows instalado e continue a transação nele.");
+
+      //Logando no console informações da venda
+      //para facilitar a visualização pelo usuário.
+      console.log("Administrativa criada com ID: " + data.pagamentoExterno.id);
+
+      //Como administrativas não são consideradas vendas, elas não possuem intencaoVenda,
+      //sendo consideradas apenas como pagamentoExterno (representando uma ação fora do
+      //ControlPay que é realizada com base nesse Pagamento Externo).
     })
     .catch((error) => {
       throw new Error(error);
@@ -264,6 +373,8 @@ function PopulateTerminalSelect(selectedTerminalId) {
     "&pessoaId=" +
     personId;
 
+    console.log("URL da chamada: " + apiUrl);
+
   const requestOptions = {
     method: "POST",
     headers: {
@@ -274,13 +385,15 @@ function PopulateTerminalSelect(selectedTerminalId) {
   //Chamada para a API Terminal/GetByPessoaId.
   fetch(apiUrl, requestOptions)
     .then((response) => {
-
       if (!response.ok) {
-
-        alert("Não foi possível realizar a chamada para encontrar os terminais disponíveis. Verifique se o Login ou a adição da chave de integração foi realizada corretamente.");
+        alert(
+          "Não foi possível realizar a chamada para encontrar os terminais disponíveis. Verifique se o Login ou a adição da chave de integração foi realizada corretamente."
+        );
 
         throw new Error(
-          "A chamada retornou status: " + response.status + ". É possível verificar mais informações da chamada na aba \"Network\" da janela de ferramentas do desenvolvedor do navegador."
+          "A chamada retornou status: " +
+            response.status +
+            '. É possível verificar mais informações da chamada na aba "Network" da janela de ferramentas do desenvolvedor do navegador.'
         );
       }
 
@@ -291,7 +404,7 @@ function PopulateTerminalSelect(selectedTerminalId) {
       //possa visualizar as respostas da API.
       console.log(data);
 
-      if(!data.terminais.length) {
+      if (!data.terminais.length) {
         let opt = document.createElement("option");
         opt.value = 0;
         opt.innerHTML = "Nenhum terminal disponível";
@@ -305,9 +418,8 @@ function PopulateTerminalSelect(selectedTerminalId) {
       data.terminais.map((terminal) => {
         let opt = document.createElement("option");
         opt.value = terminal.id;
-        opt.innerHTML =
-          "[ID: " + terminal.id + "] " + terminal.nome;
-          selectTerminal.append(opt);
+        opt.innerHTML = "[ID: " + terminal.id + "] " + terminal.nome;
+        selectTerminal.append(opt);
       });
 
       return selectTerminal;
@@ -316,11 +428,10 @@ function PopulateTerminalSelect(selectedTerminalId) {
       //Caso a chamada desta função tenha se originado da criação de um
       //terminal, coloca o terminal como o escolhido (na variável global
       //e no select de Terminal).
-      if(select && selectedTerminalId) {
+      if (select && selectedTerminalId) {
         terminalId = selectedTerminalId;
         document.getElementById("terminalSelect").value = selectedTerminalId;
-      }
-      else {
+      } else {
         terminalId = document.getElementById("terminalSelect").value;
       }
     })
@@ -351,6 +462,8 @@ function PopulateTerminalFisicoSelect() {
     "&pessoaId=" +
     personId;
 
+  console.log("URL da chamada: " + apiUrl);
+
   const requestOptions = {
     method: "POST",
     headers: {
@@ -366,11 +479,14 @@ function PopulateTerminalFisicoSelect() {
   fetch(apiUrl, requestOptions)
     .then((response) => {
       if (!response.ok) {
-
-        alert("Não foi possível realizar a chamada para encontrar os pontos de captura disponíveis. Verifique se o Login ou a adição da chave de integração foi realizada corretamente.");
+        alert(
+          "Não foi possível realizar a chamada para encontrar os pontos de captura disponíveis. Verifique se o Login ou a adição da chave de integração foi realizada corretamente."
+        );
 
         throw new Error(
-          "A chamada retornou status: " + response.status + ". É possível verificar mais informações da chamada na aba \"Network\" da janela de ferramentas do desenvolvedor do navegador."
+          "A chamada retornou status: " +
+            response.status +
+            '. É possível verificar mais informações da chamada na aba "Network" da janela de ferramentas do desenvolvedor do navegador.'
         );
       }
 
@@ -381,7 +497,7 @@ function PopulateTerminalFisicoSelect() {
       //possa visualizar as respostas da API.
       console.log(data);
 
-      if(!data.terminaisFisicos.length) {
+      if (!data.terminaisFisicos.length) {
         let opt = document.createElement("option");
         opt.value = 0;
         opt.innerHTML = "Nenhum terminal disponível";
@@ -396,7 +512,12 @@ function PopulateTerminalFisicoSelect() {
         let opt = document.createElement("option");
         opt.value = terminalFisico.id;
         opt.innerHTML =
-          terminalFisico.nome + " (PdC: " + terminalFisico.pontoCaptura + ") [ID de instalação: " + terminalFisico.instalacaoId + "]";
+          terminalFisico.nome +
+          " (PdC: " +
+          terminalFisico.pontoCaptura +
+          ") [ID de instalação: " +
+          terminalFisico.instalacaoId +
+          "]";
         selectPdC.append(opt);
       });
     })
@@ -462,11 +583,105 @@ function ToggleExplanationText() {
  * Chamada de venda no ControlPay.
  */
 function Vender() {
-  
-  if(!apiKey || !personId || !terminalId) {
-    alert("Realize as etapas anteriores deste exemplo primeiro para que a chave de integração, ID da Pessoa e ID do terminal possam ser preenchidos.");
+
+  if (!apiKey || !personId || !terminalId) {
+    alert(
+      "Realize as etapas anteriores deste exemplo primeiro para que a chave de integração, ID da Pessoa e ID do terminal possam ser preenchidos."
+    );
     return;
   }
 
-  //TODO Chamada à API Venda/Vender.
+  //Variáveis para a chamada.
+  var paymentMethod = document.getElementById("paymentMethodSelect").value;
+  var inputValue = document.getElementById("transactionValueInput").value;
+  var startAuto = document.getElementById("startAutoSwitch").checked;
+
+  //Formatando o valor informado no input de Valor
+  //para a moeda brasileira.
+  let realBr = new Intl.NumberFormat('pt-br')
+  var transactionValue = realBr.format(inputValue);
+
+  //Endpoint de Login
+  const apiUrl =
+    "https://sandbox.controlpay.com.br/webapi/Venda/Vender?key=" + apiKey;
+
+  console.log("URL da chamada: " + apiUrl);
+
+  //Body da requisição de Login
+  const venderBody = {
+    formaPagamentoId: paymentMethod,
+    terminalId: terminalId,
+    valorTotalVendido: transactionValue,
+    observacao:
+      "Esta venda foi realizada usando a aplicação exemplo fornecida pelo time de desenvolvimento do ControlPay.",
+    aguardarTefIniciarTransacao: startAuto,
+
+    //Exemplo de body acima:
+    // formaPagamentoId: 21,
+    // terminalId: 1234,
+    // valorTotalVendido: "10,00",
+    // observacao: "Obs. atrelada à venda para uso de quem realizou a venda.",
+    // aguardarTefIniciarTransacao: true,
+
+    //Propriedades opcionais (exemplos):
+    // pedidoId: 123,            //Utilizado para Pedidos no ControlPay.
+    // preDatado: true,          //Para transações pré-datadas.
+    // aVista: true,             //Para transações à vista.
+    // parcelamentoAdmin: true,  //Tipo de parcelamento (booleano indicando admin/emissor ou loja/estabelecimento)
+    // quantidadeParcelas: 1     //Quantidade de parcelas quando há parcelamento.
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(venderBody),
+  };
+
+  console.log("Body da chamada: " + requestOptions.body);
+
+  //Chamada para a API Terminal/Insert.
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        alert(
+          'Não foi possível realizar uma venda. Verifique a aba "Network" das ferramentas do desenvolvedor para mais informações sobre o erro retornadas pela API.'
+        );
+
+        throw new Error(
+          "A chamada retornou status: " +
+            response.status +
+            '. É possível verificar mais informações da chamada na aba "Network" da janela de ferramentas do desenvolvedor do navegador.'
+        );
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+
+      //Logando informações no console para que o usuário
+      //possa visualizar as respostas da API.
+      console.log(data);
+
+      alert("Intenção de venda criada!\r\nCaso tenha realizado uma transação TEF, verifique o PayGo Windows instalado e continue a transação nele.\r\nCaso tenha realizado uma transação com Gateway, verifique a janela de ferramentas do desenvolvedor para recuperar o link de redirecionamento para o Gateway.");
+
+      //Logando no console informações da venda
+      //para facilitar a visualização pelo usuário.
+      console.log("Intenção de venda criada com ID: " + data.intencaoVenda.id);
+
+      //Vendas geram intenções de venda e pagamentos externos.
+      
+      //Intenções de venda (intencaoVenda) são objetos que representam a
+      //venda em si dentro do ControlPay como plataforma.
+      
+      //Pagamentos externos (pagamentoExterno) são objetos que representam
+      //as operações fora do ControlPay atreladas à venda (uma intenção pode
+      //ter vários pagametos: um para a venda em crédito à vista e um, em seguida,
+      //para um cancelamento da primeira venda, por exemplo. Ambos os pagamentoExterno
+      //estarão vinculado à mesma intencaoVenda).
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
 }
