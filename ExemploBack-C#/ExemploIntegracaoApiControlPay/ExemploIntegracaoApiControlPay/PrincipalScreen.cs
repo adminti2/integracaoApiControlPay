@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ExemploIntegracaoApiControlPay
@@ -17,6 +10,8 @@ namespace ExemploIntegracaoApiControlPay
       {
          InitializeComponent();
       }
+
+      //TODO Comentar métodos
 
       private void PrincipalScreen_Load(object sender, EventArgs e)
       {
@@ -29,6 +24,10 @@ namespace ExemploIntegracaoApiControlPay
          LinkLabel.Link linkDocs = new LinkLabel.Link();
          linkDocs.LinkData = "https://paygodev.readme.io/docs/o-que-é-controlpay/";
          linkLabelDocs.Links.Add(linkDocs);
+
+         panelDoesntHaveKey.Show();
+         panelHasKey.Hide();
+         checkBoxHasKey.Checked = false;
       }
 
       private void linkLabelSandboxControlPay_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -39,6 +38,12 @@ namespace ExemploIntegracaoApiControlPay
       private void linkLabelDocs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
       {
          Process.Start(e.Link.LinkData as string);
+      }
+
+      private void checkBoxHasKey_CheckedChanged(object sender, EventArgs e)
+      {
+         panelDoesntHaveKey.Visible = !panelDoesntHaveKey.Visible;
+         panelHasKey.Visible = !panelHasKey.Visible;
       }
    }
 }

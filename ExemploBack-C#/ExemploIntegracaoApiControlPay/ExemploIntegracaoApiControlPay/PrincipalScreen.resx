@@ -126,4 +126,34 @@ Também é importante ressaltar que é necessário realizar as ações desta apl
 
 Para começar, basta seguir para a próxima aba usando o seletor no topo desta tela.</value>
   </data>
+  <data name="textBoxInfoLogin.Text" xml:space="preserve">
+    <value>Para realizar chamadas ao ControlPay, é preciso ter uma chave de integração.
+
+Esta chave de integração pode ser adquirida usando o login de usuário (sendo uma chave que expirará em, aproximadamente, um dia), ou pode ser cadastrada no portal ControlPay (tendo um tempo de expiração maleável, ou até podendo não expirar).</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAb2JnAG9iZwBrXmUAbmFnAGVYYgBtYGYBcWRoAHBjaAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAb2xrAG9raxNwbWx3cG1tg3BtbCRwbW1KcG1tknBtbExwZGUCcGhpAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBubQBwbm1ocG5t6XBubeRwbWyxcG5t03Bubd9wbm3VcG1tHnBt
+        bQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwbm0AcG5tZXBubehwbm3icG1sznBubOhxbmvfcG5s0W9t
+        bR1wbWwAAAAAAAAAAAAAAAAA36swANuoMA7dqTA44KsuInRvaRNwbm2wcG5t63BubOFnbn/JXm6Vt2Rt
+        hlQ7bN0NNm7sNjZu7CU0buoBNW7rANimMATdqTCI3qow5t+qL8mZhFVyb21t23BubPVobn/VPG/h0zVv
+        8OE2bu6jN27slDdv7eQ3b+3PN27sMjdu7ADbqDAO3qowwd2qMNPgqy/jnIZUx25tbuFxbmrWYG6Q1jdv
+        7Ok2b+3MN2/t9Ddv7PA2buzRN2/t6Ddv7Fc3b+wAwpwwAN2pMGHeqjDP36ov5cSbPsB5cmjHcm9rx2Rt
+        hlc3bemaO2vg3jhu6eg2b+3ZN2/t2Ddv7aw2buwdN27sAN+qMADdqTBP3qkwyt2qMNLeqjDi1qU00dSk
+        Nb/TnS1Cbjo8iW48Qd1cTHjTOWzl4zZv7do3buycNm7sFDZu7ADcqDAM3qowu92pMNLeqjDo3qow8d6q
+        MOTfqzDVypUwxHQ5MNlzNy/LcDo460Flzd42b+/UN2/t6Ddv7VU3b+0A26YwBt2pMJjeqjDo3qow2d6q
+        MJvfrDDb4Kww4raAMMlzODHoczgx8XE5NbQ9adiiNm/u6jdv7dw3buw7N27sAN2qMADcqDAY3akwW96r
+        MDmYYDAZnWYwq5xkMNl6QDHfcjcx3HM4Me5zNy9jNG/uFjZu7Fk3bus9NGflAzVq5wAAAAAAAAAAAAAA
+        AAByNzEAcjcxYnE2MeZxNjHlcjcx03M4MdpzODHeczgx0HI4MB1yODAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAczgxAHM4MWhzODHpczgx5HI4Ma9zODHSczgx33M4MdhzODEfczgxAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAHI3MAByNjATcjcxeXI4MYpyODAlcjgxSnM4MZRyNzBOcDQvAnE1MAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAbjQtAG41LQFrNiwBbTMsAF0tJgBrMywBcDQtAG80LQAAAAAAAAAAAAAA
+        AAAAAAAA+R8AAPAPAADwDwAA8A8AAIABAAAAAQAAAAEAAAABAACAAQAAAAEAAAABAACAAQAA8A8AAPAP
+        AADwDwAA+R8AAA==
+</value>
+  </data>
 </root>
