@@ -1,5 +1,4 @@
-﻿
-namespace ExemploIntegracaoApiControlPay
+﻿namespace ExemploIntegracaoApiControlPay
 {
    partial class PrincipalScreen
    {
@@ -74,12 +73,12 @@ namespace ExemploIntegracaoApiControlPay
          this.textBoxInfoTransacoes = new System.Windows.Forms.TextBox();
          this.textBoxTitleTransacoes = new System.Windows.Forms.TextBox();
          this.tabPageAdmin = new System.Windows.Forms.TabPage();
-         this.textBoxInfoAdministrativas = new System.Windows.Forms.TextBox();
-         this.textBoxTitleAdministrativas = new System.Windows.Forms.TextBox();
+         this.buttonAdmin = new System.Windows.Forms.Button();
+         this.checkBoxStartAdminAuto = new System.Windows.Forms.CheckBox();
          this.textBoxTechPassword = new System.Windows.Forms.TextBox();
          this.labelSenhaTecnica = new System.Windows.Forms.Label();
-         this.checkBoxStartAdminAuto = new System.Windows.Forms.CheckBox();
-         this.buttonAdmin = new System.Windows.Forms.Button();
+         this.textBoxInfoAdministrativas = new System.Windows.Forms.TextBox();
+         this.textBoxTitleAdministrativas = new System.Windows.Forms.TextBox();
          this.tabControlPages.SuspendLayout();
          this.tabPageInfo.SuspendLayout();
          this.groupBoxLinks.SuspendLayout();
@@ -223,7 +222,7 @@ namespace ExemploIntegracaoApiControlPay
          this.textBoxKeyValue.Multiline = true;
          this.textBoxKeyValue.Name = "textBoxKeyValue";
          this.textBoxKeyValue.ReadOnly = true;
-         this.textBoxKeyValue.Size = new System.Drawing.Size(207, 22);
+         this.textBoxKeyValue.Size = new System.Drawing.Size(207, 272);
          this.textBoxKeyValue.TabIndex = 7;
          this.textBoxKeyValue.Text = "...";
          this.textBoxKeyValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -290,13 +289,16 @@ namespace ExemploIntegracaoApiControlPay
          this.buttonLogin.TabIndex = 4;
          this.buttonLogin.Text = "Login";
          this.buttonLogin.UseVisualStyleBackColor = false;
+         this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
          // 
          // textBoxLoginPasswordInput
          // 
          this.textBoxLoginPasswordInput.Location = new System.Drawing.Point(87, 59);
          this.textBoxLoginPasswordInput.Name = "textBoxLoginPasswordInput";
+         this.textBoxLoginPasswordInput.PasswordChar = '*';
          this.textBoxLoginPasswordInput.Size = new System.Drawing.Size(110, 22);
          this.textBoxLoginPasswordInput.TabIndex = 3;
+         this.textBoxLoginPasswordInput.UseSystemPasswordChar = true;
          // 
          // labelPassword
          // 
@@ -377,6 +379,7 @@ namespace ExemploIntegracaoApiControlPay
          this.buttonAddKey.TabIndex = 5;
          this.buttonAddKey.Text = "Adicionar chave";
          this.buttonAddKey.UseVisualStyleBackColor = false;
+         this.buttonAddKey.Click += new System.EventHandler(this.buttonAddKey_Click);
          // 
          // textBoxKeyInput
          // 
@@ -664,6 +667,49 @@ namespace ExemploIntegracaoApiControlPay
          this.tabPageAdmin.TabIndex = 4;
          this.tabPageAdmin.Text = "Administrativas";
          // 
+         // buttonAdmin
+         // 
+         this.buttonAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(3)))), ((int)(((byte)(48)))));
+         this.buttonAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.buttonAdmin.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.buttonAdmin.ForeColor = System.Drawing.Color.White;
+         this.buttonAdmin.Location = new System.Drawing.Point(306, 371);
+         this.buttonAdmin.Name = "buttonAdmin";
+         this.buttonAdmin.Size = new System.Drawing.Size(182, 27);
+         this.buttonAdmin.TabIndex = 17;
+         this.buttonAdmin.Text = "Iniciar administrativa";
+         this.buttonAdmin.UseVisualStyleBackColor = false;
+         // 
+         // checkBoxStartAdminAuto
+         // 
+         this.checkBoxStartAdminAuto.AutoSize = true;
+         this.checkBoxStartAdminAuto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.checkBoxStartAdminAuto.ForeColor = System.Drawing.Color.White;
+         this.checkBoxStartAdminAuto.Location = new System.Drawing.Point(206, 285);
+         this.checkBoxStartAdminAuto.Name = "checkBoxStartAdminAuto";
+         this.checkBoxStartAdminAuto.Size = new System.Drawing.Size(385, 29);
+         this.checkBoxStartAdminAuto.TabIndex = 16;
+         this.checkBoxStartAdminAuto.Text = "Iniciar administrativa automaticamente?";
+         this.checkBoxStartAdminAuto.UseVisualStyleBackColor = true;
+         // 
+         // textBoxTechPassword
+         // 
+         this.textBoxTechPassword.Location = new System.Drawing.Point(306, 223);
+         this.textBoxTechPassword.Name = "textBoxTechPassword";
+         this.textBoxTechPassword.Size = new System.Drawing.Size(182, 22);
+         this.textBoxTechPassword.TabIndex = 15;
+         // 
+         // labelSenhaTecnica
+         // 
+         this.labelSenhaTecnica.AutoSize = true;
+         this.labelSenhaTecnica.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelSenhaTecnica.ForeColor = System.Drawing.Color.White;
+         this.labelSenhaTecnica.Location = new System.Drawing.Point(353, 207);
+         this.labelSenhaTecnica.Name = "labelSenhaTecnica";
+         this.labelSenhaTecnica.Size = new System.Drawing.Size(96, 17);
+         this.labelSenhaTecnica.TabIndex = 14;
+         this.labelSenhaTecnica.Text = "Senha técnica:";
+         // 
          // textBoxInfoAdministrativas
          // 
          this.textBoxInfoAdministrativas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
@@ -691,49 +737,6 @@ namespace ExemploIntegracaoApiControlPay
          this.textBoxTitleAdministrativas.Size = new System.Drawing.Size(221, 57);
          this.textBoxTitleAdministrativas.TabIndex = 7;
          this.textBoxTitleAdministrativas.Text = "Administrativas";
-         // 
-         // textBoxTechPassword
-         // 
-         this.textBoxTechPassword.Location = new System.Drawing.Point(306, 223);
-         this.textBoxTechPassword.Name = "textBoxTechPassword";
-         this.textBoxTechPassword.Size = new System.Drawing.Size(182, 22);
-         this.textBoxTechPassword.TabIndex = 15;
-         // 
-         // labelSenhaTecnica
-         // 
-         this.labelSenhaTecnica.AutoSize = true;
-         this.labelSenhaTecnica.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this.labelSenhaTecnica.ForeColor = System.Drawing.Color.White;
-         this.labelSenhaTecnica.Location = new System.Drawing.Point(353, 207);
-         this.labelSenhaTecnica.Name = "labelSenhaTecnica";
-         this.labelSenhaTecnica.Size = new System.Drawing.Size(96, 17);
-         this.labelSenhaTecnica.TabIndex = 14;
-         this.labelSenhaTecnica.Text = "Senha técnica:";
-         // 
-         // checkBoxStartAdminAuto
-         // 
-         this.checkBoxStartAdminAuto.AutoSize = true;
-         this.checkBoxStartAdminAuto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this.checkBoxStartAdminAuto.ForeColor = System.Drawing.Color.White;
-         this.checkBoxStartAdminAuto.Location = new System.Drawing.Point(206, 285);
-         this.checkBoxStartAdminAuto.Name = "checkBoxStartAdminAuto";
-         this.checkBoxStartAdminAuto.Size = new System.Drawing.Size(385, 29);
-         this.checkBoxStartAdminAuto.TabIndex = 16;
-         this.checkBoxStartAdminAuto.Text = "Iniciar administrativa automaticamente?";
-         this.checkBoxStartAdminAuto.UseVisualStyleBackColor = true;
-         // 
-         // buttonAdmin
-         // 
-         this.buttonAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(3)))), ((int)(((byte)(48)))));
-         this.buttonAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-         this.buttonAdmin.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this.buttonAdmin.ForeColor = System.Drawing.Color.White;
-         this.buttonAdmin.Location = new System.Drawing.Point(306, 371);
-         this.buttonAdmin.Name = "buttonAdmin";
-         this.buttonAdmin.Size = new System.Drawing.Size(182, 27);
-         this.buttonAdmin.TabIndex = 17;
-         this.buttonAdmin.Text = "Iniciar administrativa";
-         this.buttonAdmin.UseVisualStyleBackColor = false;
          // 
          // PrincipalScreen
          // 
@@ -824,4 +827,3 @@ namespace ExemploIntegracaoApiControlPay
       private System.Windows.Forms.TextBox textBoxTitleAdministrativas;
    }
 }
-
