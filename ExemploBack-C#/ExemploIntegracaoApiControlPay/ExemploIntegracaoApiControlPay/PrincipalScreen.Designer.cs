@@ -36,6 +36,10 @@ namespace ExemploIntegracaoApiControlPay
          this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
          this.textBoxExplainingText = new System.Windows.Forms.TextBox();
          this.tabPageLogin = new System.Windows.Forms.TabPage();
+         this.labelKeyValue = new System.Windows.Forms.Label();
+         this.textBoxKeyValue = new System.Windows.Forms.TextBox();
+         this.labelPersonIdValue = new System.Windows.Forms.Label();
+         this.textBoxPersonIdValue = new System.Windows.Forms.TextBox();
          this.checkBoxHasKey = new System.Windows.Forms.CheckBox();
          this.panelDoesntHaveKey = new System.Windows.Forms.Panel();
          this.buttonLogin = new System.Windows.Forms.Button();
@@ -52,12 +56,30 @@ namespace ExemploIntegracaoApiControlPay
          this.textBoxPersonIdInput = new System.Windows.Forms.TextBox();
          this.labelPersonIdInput = new System.Windows.Forms.Label();
          this.tabPageTerminal = new System.Windows.Forms.TabPage();
+         this.comboBoxTerminais = new System.Windows.Forms.ComboBox();
+         this.textBox1 = new System.Windows.Forms.TextBox();
+         this.buttonCreateTerminal = new System.Windows.Forms.Button();
+         this.comboBoxTerminaisFisicos = new System.Windows.Forms.ComboBox();
+         this.textBoxInfoTerminal2 = new System.Windows.Forms.TextBox();
+         this.textBoxInfoTerminal1 = new System.Windows.Forms.TextBox();
+         this.textBoxTitleTerminal = new System.Windows.Forms.TextBox();
          this.tabPageTransacoes = new System.Windows.Forms.TabPage();
+         this.buttonTransacionar = new System.Windows.Forms.Button();
+         this.checkBoxStartAuto = new System.Windows.Forms.CheckBox();
+         this.textBoxInfoStartAuto = new System.Windows.Forms.TextBox();
+         this.textBoxValorTransacao = new System.Windows.Forms.TextBox();
+         this.labelValorTransacao = new System.Windows.Forms.Label();
+         this.labelFormaPagamento = new System.Windows.Forms.Label();
+         this.comboBoxFormaPagamento = new System.Windows.Forms.ComboBox();
+         this.textBoxInfoTransacoes = new System.Windows.Forms.TextBox();
+         this.textBoxTitleTransacoes = new System.Windows.Forms.TextBox();
          this.tabPageAdmin = new System.Windows.Forms.TabPage();
-         this.textBoxPersonIdValue = new System.Windows.Forms.TextBox();
-         this.labelPersonIdValue = new System.Windows.Forms.Label();
-         this.labelKeyValue = new System.Windows.Forms.Label();
-         this.textBoxKeyValue = new System.Windows.Forms.TextBox();
+         this.textBoxInfoAdministrativas = new System.Windows.Forms.TextBox();
+         this.textBoxTitleAdministrativas = new System.Windows.Forms.TextBox();
+         this.textBoxTechPassword = new System.Windows.Forms.TextBox();
+         this.labelSenhaTecnica = new System.Windows.Forms.Label();
+         this.checkBoxStartAdminAuto = new System.Windows.Forms.CheckBox();
+         this.buttonAdmin = new System.Windows.Forms.Button();
          this.tabControlPages.SuspendLayout();
          this.tabPageInfo.SuspendLayout();
          this.groupBoxLinks.SuspendLayout();
@@ -65,6 +87,9 @@ namespace ExemploIntegracaoApiControlPay
          this.tabPageLogin.SuspendLayout();
          this.panelDoesntHaveKey.SuspendLayout();
          this.panelHasKey.SuspendLayout();
+         this.tabPageTerminal.SuspendLayout();
+         this.tabPageTransacoes.SuspendLayout();
+         this.tabPageAdmin.SuspendLayout();
          this.SuspendLayout();
          // 
          // tabControlPages
@@ -176,6 +201,57 @@ namespace ExemploIntegracaoApiControlPay
          this.tabPageLogin.Size = new System.Drawing.Size(808, 490);
          this.tabPageLogin.TabIndex = 1;
          this.tabPageLogin.Text = "Login";
+         // 
+         // labelKeyValue
+         // 
+         this.labelKeyValue.AutoSize = true;
+         this.labelKeyValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelKeyValue.ForeColor = System.Drawing.Color.White;
+         this.labelKeyValue.Location = new System.Drawing.Point(516, 141);
+         this.labelKeyValue.Name = "labelKeyValue";
+         this.labelKeyValue.Size = new System.Drawing.Size(210, 17);
+         this.labelKeyValue.TabIndex = 6;
+         this.labelKeyValue.Text = "Chave de integração a ser usada:";
+         // 
+         // textBoxKeyValue
+         // 
+         this.textBoxKeyValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxKeyValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxKeyValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxKeyValue.ForeColor = System.Drawing.Color.White;
+         this.textBoxKeyValue.Location = new System.Drawing.Point(519, 157);
+         this.textBoxKeyValue.Multiline = true;
+         this.textBoxKeyValue.Name = "textBoxKeyValue";
+         this.textBoxKeyValue.ReadOnly = true;
+         this.textBoxKeyValue.Size = new System.Drawing.Size(207, 22);
+         this.textBoxKeyValue.TabIndex = 7;
+         this.textBoxKeyValue.Text = "...";
+         this.textBoxKeyValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+         // 
+         // labelPersonIdValue
+         // 
+         this.labelPersonIdValue.AutoSize = true;
+         this.labelPersonIdValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelPersonIdValue.ForeColor = System.Drawing.Color.White;
+         this.labelPersonIdValue.Location = new System.Drawing.Point(542, 87);
+         this.labelPersonIdValue.Name = "labelPersonIdValue";
+         this.labelPersonIdValue.Size = new System.Drawing.Size(165, 17);
+         this.labelPersonIdValue.TabIndex = 5;
+         this.labelPersonIdValue.Text = "ID de Pessoa a ser usado:";
+         // 
+         // textBoxPersonIdValue
+         // 
+         this.textBoxPersonIdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxPersonIdValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxPersonIdValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxPersonIdValue.ForeColor = System.Drawing.Color.White;
+         this.textBoxPersonIdValue.Location = new System.Drawing.Point(545, 103);
+         this.textBoxPersonIdValue.Name = "textBoxPersonIdValue";
+         this.textBoxPersonIdValue.ReadOnly = true;
+         this.textBoxPersonIdValue.Size = new System.Drawing.Size(155, 18);
+         this.textBoxPersonIdValue.TabIndex = 5;
+         this.textBoxPersonIdValue.Text = "...";
+         this.textBoxPersonIdValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
          // 
          // checkBoxHasKey
          // 
@@ -339,6 +415,13 @@ namespace ExemploIntegracaoApiControlPay
          // tabPageTerminal
          // 
          this.tabPageTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.tabPageTerminal.Controls.Add(this.comboBoxTerminais);
+         this.tabPageTerminal.Controls.Add(this.textBox1);
+         this.tabPageTerminal.Controls.Add(this.buttonCreateTerminal);
+         this.tabPageTerminal.Controls.Add(this.comboBoxTerminaisFisicos);
+         this.tabPageTerminal.Controls.Add(this.textBoxInfoTerminal2);
+         this.tabPageTerminal.Controls.Add(this.textBoxInfoTerminal1);
+         this.tabPageTerminal.Controls.Add(this.textBoxTitleTerminal);
          this.tabPageTerminal.Location = new System.Drawing.Point(4, 22);
          this.tabPageTerminal.Name = "tabPageTerminal";
          this.tabPageTerminal.Padding = new System.Windows.Forms.Padding(3);
@@ -346,9 +429,111 @@ namespace ExemploIntegracaoApiControlPay
          this.tabPageTerminal.TabIndex = 2;
          this.tabPageTerminal.Text = "Terminal";
          // 
+         // comboBoxTerminais
+         // 
+         this.comboBoxTerminais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+         this.comboBoxTerminais.FormattingEnabled = true;
+         this.comboBoxTerminais.Items.AddRange(new object[] {
+            "Nenhum terminal disponível"});
+         this.comboBoxTerminais.Location = new System.Drawing.Point(510, 376);
+         this.comboBoxTerminais.Name = "comboBoxTerminais";
+         this.comboBoxTerminais.Size = new System.Drawing.Size(170, 21);
+         this.comboBoxTerminais.TabIndex = 9;
+         // 
+         // textBox1
+         // 
+         this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBox1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBox1.ForeColor = System.Drawing.Color.White;
+         this.textBox1.Location = new System.Drawing.Point(444, 308);
+         this.textBox1.Multiline = true;
+         this.textBox1.Name = "textBox1";
+         this.textBox1.ReadOnly = true;
+         this.textBox1.Size = new System.Drawing.Size(334, 62);
+         this.textBox1.TabIndex = 8;
+         this.textBox1.Text = "Caso já tenha um terminal cadastrado (ou tenha criado um terminal agora), escolha" +
+    " abaixo o terminal que será usado para realizar transações:";
+         // 
+         // buttonCreateTerminal
+         // 
+         this.buttonCreateTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(3)))), ((int)(((byte)(48)))));
+         this.buttonCreateTerminal.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.buttonCreateTerminal.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.buttonCreateTerminal.ForeColor = System.Drawing.Color.White;
+         this.buttonCreateTerminal.Location = new System.Drawing.Point(232, 370);
+         this.buttonCreateTerminal.Name = "buttonCreateTerminal";
+         this.buttonCreateTerminal.Size = new System.Drawing.Size(120, 27);
+         this.buttonCreateTerminal.TabIndex = 7;
+         this.buttonCreateTerminal.Text = "Criar terminal";
+         this.buttonCreateTerminal.UseVisualStyleBackColor = false;
+         // 
+         // comboBoxTerminaisFisicos
+         // 
+         this.comboBoxTerminaisFisicos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+         this.comboBoxTerminaisFisicos.FormattingEnabled = true;
+         this.comboBoxTerminaisFisicos.Items.AddRange(new object[] {
+            "Nenhum PdC disponível"});
+         this.comboBoxTerminaisFisicos.Location = new System.Drawing.Point(32, 374);
+         this.comboBoxTerminaisFisicos.Name = "comboBoxTerminaisFisicos";
+         this.comboBoxTerminaisFisicos.Size = new System.Drawing.Size(170, 21);
+         this.comboBoxTerminaisFisicos.TabIndex = 6;
+         // 
+         // textBoxInfoTerminal2
+         // 
+         this.textBoxInfoTerminal2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxInfoTerminal2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxInfoTerminal2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxInfoTerminal2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(14)))), ((int)(((byte)(56)))));
+         this.textBoxInfoTerminal2.Location = new System.Drawing.Point(12, 308);
+         this.textBoxInfoTerminal2.Multiline = true;
+         this.textBoxInfoTerminal2.Name = "textBoxInfoTerminal2";
+         this.textBoxInfoTerminal2.ReadOnly = true;
+         this.textBoxInfoTerminal2.Size = new System.Drawing.Size(403, 40);
+         this.textBoxInfoTerminal2.TabIndex = 5;
+         this.textBoxInfoTerminal2.Text = "Importante: selecione o terminal físico que foi ativado no PayGo Windows caso for" +
+    " usar as formas de pagamento TEF!";
+         // 
+         // textBoxInfoTerminal1
+         // 
+         this.textBoxInfoTerminal1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxInfoTerminal1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxInfoTerminal1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxInfoTerminal1.ForeColor = System.Drawing.Color.White;
+         this.textBoxInfoTerminal1.Location = new System.Drawing.Point(12, 69);
+         this.textBoxInfoTerminal1.Multiline = true;
+         this.textBoxInfoTerminal1.Name = "textBoxInfoTerminal1";
+         this.textBoxInfoTerminal1.ReadOnly = true;
+         this.textBoxInfoTerminal1.Size = new System.Drawing.Size(403, 233);
+         this.textBoxInfoTerminal1.TabIndex = 4;
+         this.textBoxInfoTerminal1.Text = resources.GetString("textBoxInfoTerminal1.Text");
+         // 
+         // textBoxTitleTerminal
+         // 
+         this.textBoxTitleTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxTitleTerminal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxTitleTerminal.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxTitleTerminal.ForeColor = System.Drawing.Color.White;
+         this.textBoxTitleTerminal.Location = new System.Drawing.Point(6, 6);
+         this.textBoxTitleTerminal.Multiline = true;
+         this.textBoxTitleTerminal.Name = "textBoxTitleTerminal";
+         this.textBoxTitleTerminal.ReadOnly = true;
+         this.textBoxTitleTerminal.Size = new System.Drawing.Size(176, 57);
+         this.textBoxTitleTerminal.TabIndex = 3;
+         this.textBoxTitleTerminal.Text = "Terminal";
+         // 
          // tabPageTransacoes
          // 
          this.tabPageTransacoes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.tabPageTransacoes.Controls.Add(this.buttonTransacionar);
+         this.tabPageTransacoes.Controls.Add(this.checkBoxStartAuto);
+         this.tabPageTransacoes.Controls.Add(this.textBoxInfoStartAuto);
+         this.tabPageTransacoes.Controls.Add(this.textBoxValorTransacao);
+         this.tabPageTransacoes.Controls.Add(this.labelValorTransacao);
+         this.tabPageTransacoes.Controls.Add(this.labelFormaPagamento);
+         this.tabPageTransacoes.Controls.Add(this.comboBoxFormaPagamento);
+         this.tabPageTransacoes.Controls.Add(this.textBoxInfoTransacoes);
+         this.tabPageTransacoes.Controls.Add(this.textBoxTitleTransacoes);
          this.tabPageTransacoes.Location = new System.Drawing.Point(4, 22);
          this.tabPageTransacoes.Name = "tabPageTransacoes";
          this.tabPageTransacoes.Padding = new System.Windows.Forms.Padding(3);
@@ -356,9 +541,122 @@ namespace ExemploIntegracaoApiControlPay
          this.tabPageTransacoes.TabIndex = 3;
          this.tabPageTransacoes.Text = "Transações";
          // 
+         // buttonTransacionar
+         // 
+         this.buttonTransacionar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(3)))), ((int)(((byte)(48)))));
+         this.buttonTransacionar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.buttonTransacionar.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.buttonTransacionar.ForeColor = System.Drawing.Color.White;
+         this.buttonTransacionar.Location = new System.Drawing.Point(344, 400);
+         this.buttonTransacionar.Name = "buttonTransacionar";
+         this.buttonTransacionar.Size = new System.Drawing.Size(120, 27);
+         this.buttonTransacionar.TabIndex = 16;
+         this.buttonTransacionar.Text = "Transacionar";
+         this.buttonTransacionar.UseVisualStyleBackColor = false;
+         // 
+         // checkBoxStartAuto
+         // 
+         this.checkBoxStartAuto.AutoSize = true;
+         this.checkBoxStartAuto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.checkBoxStartAuto.ForeColor = System.Drawing.Color.White;
+         this.checkBoxStartAuto.Location = new System.Drawing.Point(432, 307);
+         this.checkBoxStartAuto.Name = "checkBoxStartAuto";
+         this.checkBoxStartAuto.Size = new System.Drawing.Size(345, 29);
+         this.checkBoxStartAuto.TabIndex = 15;
+         this.checkBoxStartAuto.Text = "Iniciar transação automaticamente?";
+         this.checkBoxStartAuto.UseVisualStyleBackColor = true;
+         // 
+         // textBoxInfoStartAuto
+         // 
+         this.textBoxInfoStartAuto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxInfoStartAuto.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxInfoStartAuto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxInfoStartAuto.ForeColor = System.Drawing.Color.White;
+         this.textBoxInfoStartAuto.Location = new System.Drawing.Point(448, 193);
+         this.textBoxInfoStartAuto.Multiline = true;
+         this.textBoxInfoStartAuto.Name = "textBoxInfoStartAuto";
+         this.textBoxInfoStartAuto.ReadOnly = true;
+         this.textBoxInfoStartAuto.Size = new System.Drawing.Size(315, 110);
+         this.textBoxInfoStartAuto.TabIndex = 14;
+         this.textBoxInfoStartAuto.Text = resources.GetString("textBoxInfoStartAuto.Text");
+         // 
+         // textBoxValorTransacao
+         // 
+         this.textBoxValorTransacao.Location = new System.Drawing.Point(498, 148);
+         this.textBoxValorTransacao.Name = "textBoxValorTransacao";
+         this.textBoxValorTransacao.Size = new System.Drawing.Size(220, 22);
+         this.textBoxValorTransacao.TabIndex = 13;
+         // 
+         // labelValorTransacao
+         // 
+         this.labelValorTransacao.AutoSize = true;
+         this.labelValorTransacao.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelValorTransacao.ForeColor = System.Drawing.Color.White;
+         this.labelValorTransacao.Location = new System.Drawing.Point(495, 132);
+         this.labelValorTransacao.Name = "labelValorTransacao";
+         this.labelValorTransacao.Size = new System.Drawing.Size(126, 17);
+         this.labelValorTransacao.TabIndex = 12;
+         this.labelValorTransacao.Text = "Valor da transação:";
+         // 
+         // labelFormaPagamento
+         // 
+         this.labelFormaPagamento.AutoSize = true;
+         this.labelFormaPagamento.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelFormaPagamento.ForeColor = System.Drawing.Color.White;
+         this.labelFormaPagamento.Location = new System.Drawing.Point(495, 69);
+         this.labelFormaPagamento.Name = "labelFormaPagamento";
+         this.labelFormaPagamento.Size = new System.Drawing.Size(223, 17);
+         this.labelFormaPagamento.TabIndex = 11;
+         this.labelFormaPagamento.Text = "Escolha uma forma de pagamento:";
+         // 
+         // comboBoxFormaPagamento
+         // 
+         this.comboBoxFormaPagamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+         this.comboBoxFormaPagamento.FormattingEnabled = true;
+         this.comboBoxFormaPagamento.Items.AddRange(new object[] {
+            "Nenhum terminal disponível"});
+         this.comboBoxFormaPagamento.Location = new System.Drawing.Point(498, 85);
+         this.comboBoxFormaPagamento.Name = "comboBoxFormaPagamento";
+         this.comboBoxFormaPagamento.Size = new System.Drawing.Size(220, 21);
+         this.comboBoxFormaPagamento.TabIndex = 10;
+         // 
+         // textBoxInfoTransacoes
+         // 
+         this.textBoxInfoTransacoes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxInfoTransacoes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxInfoTransacoes.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxInfoTransacoes.ForeColor = System.Drawing.Color.White;
+         this.textBoxInfoTransacoes.Location = new System.Drawing.Point(12, 69);
+         this.textBoxInfoTransacoes.Multiline = true;
+         this.textBoxInfoTransacoes.Name = "textBoxInfoTransacoes";
+         this.textBoxInfoTransacoes.ReadOnly = true;
+         this.textBoxInfoTransacoes.Size = new System.Drawing.Size(403, 267);
+         this.textBoxInfoTransacoes.TabIndex = 6;
+         this.textBoxInfoTransacoes.Text = resources.GetString("textBoxInfoTransacoes.Text");
+         // 
+         // textBoxTitleTransacoes
+         // 
+         this.textBoxTitleTransacoes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxTitleTransacoes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxTitleTransacoes.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxTitleTransacoes.ForeColor = System.Drawing.Color.White;
+         this.textBoxTitleTransacoes.Location = new System.Drawing.Point(6, 6);
+         this.textBoxTitleTransacoes.Multiline = true;
+         this.textBoxTitleTransacoes.Name = "textBoxTitleTransacoes";
+         this.textBoxTitleTransacoes.ReadOnly = true;
+         this.textBoxTitleTransacoes.Size = new System.Drawing.Size(221, 57);
+         this.textBoxTitleTransacoes.TabIndex = 5;
+         this.textBoxTitleTransacoes.Text = "Transações";
+         // 
          // tabPageAdmin
          // 
          this.tabPageAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.tabPageAdmin.Controls.Add(this.buttonAdmin);
+         this.tabPageAdmin.Controls.Add(this.checkBoxStartAdminAuto);
+         this.tabPageAdmin.Controls.Add(this.textBoxTechPassword);
+         this.tabPageAdmin.Controls.Add(this.labelSenhaTecnica);
+         this.tabPageAdmin.Controls.Add(this.textBoxInfoAdministrativas);
+         this.tabPageAdmin.Controls.Add(this.textBoxTitleAdministrativas);
          this.tabPageAdmin.Location = new System.Drawing.Point(4, 22);
          this.tabPageAdmin.Name = "tabPageAdmin";
          this.tabPageAdmin.Padding = new System.Windows.Forms.Padding(3);
@@ -366,54 +664,76 @@ namespace ExemploIntegracaoApiControlPay
          this.tabPageAdmin.TabIndex = 4;
          this.tabPageAdmin.Text = "Administrativas";
          // 
-         // textBoxPersonIdValue
+         // textBoxInfoAdministrativas
          // 
-         this.textBoxPersonIdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
-         this.textBoxPersonIdValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
-         this.textBoxPersonIdValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this.textBoxPersonIdValue.ForeColor = System.Drawing.Color.White;
-         this.textBoxPersonIdValue.Location = new System.Drawing.Point(598, 104);
-         this.textBoxPersonIdValue.Name = "textBoxPersonIdValue";
-         this.textBoxPersonIdValue.ReadOnly = true;
-         this.textBoxPersonIdValue.Size = new System.Drawing.Size(134, 18);
-         this.textBoxPersonIdValue.TabIndex = 5;
-         this.textBoxPersonIdValue.Text = "...";
-         this.textBoxPersonIdValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+         this.textBoxInfoAdministrativas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxInfoAdministrativas.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxInfoAdministrativas.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxInfoAdministrativas.ForeColor = System.Drawing.Color.White;
+         this.textBoxInfoAdministrativas.Location = new System.Drawing.Point(12, 69);
+         this.textBoxInfoAdministrativas.Multiline = true;
+         this.textBoxInfoAdministrativas.Name = "textBoxInfoAdministrativas";
+         this.textBoxInfoAdministrativas.ReadOnly = true;
+         this.textBoxInfoAdministrativas.Size = new System.Drawing.Size(403, 98);
+         this.textBoxInfoAdministrativas.TabIndex = 8;
+         this.textBoxInfoAdministrativas.Text = resources.GetString("textBoxInfoAdministrativas.Text");
          // 
-         // labelPersonIdValue
+         // textBoxTitleAdministrativas
          // 
-         this.labelPersonIdValue.AutoSize = true;
-         this.labelPersonIdValue.ForeColor = System.Drawing.Color.White;
-         this.labelPersonIdValue.Location = new System.Drawing.Point(595, 88);
-         this.labelPersonIdValue.Name = "labelPersonIdValue";
-         this.labelPersonIdValue.Size = new System.Drawing.Size(137, 13);
-         this.labelPersonIdValue.TabIndex = 5;
-         this.labelPersonIdValue.Text = "ID de Pessoa a ser usado:";
+         this.textBoxTitleAdministrativas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxTitleAdministrativas.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxTitleAdministrativas.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxTitleAdministrativas.ForeColor = System.Drawing.Color.White;
+         this.textBoxTitleAdministrativas.Location = new System.Drawing.Point(6, 6);
+         this.textBoxTitleAdministrativas.Multiline = true;
+         this.textBoxTitleAdministrativas.Name = "textBoxTitleAdministrativas";
+         this.textBoxTitleAdministrativas.ReadOnly = true;
+         this.textBoxTitleAdministrativas.Size = new System.Drawing.Size(221, 57);
+         this.textBoxTitleAdministrativas.TabIndex = 7;
+         this.textBoxTitleAdministrativas.Text = "Administrativas";
          // 
-         // labelKeyValue
+         // textBoxTechPassword
          // 
-         this.labelKeyValue.AutoSize = true;
-         this.labelKeyValue.ForeColor = System.Drawing.Color.White;
-         this.labelKeyValue.Location = new System.Drawing.Point(574, 145);
-         this.labelKeyValue.Name = "labelKeyValue";
-         this.labelKeyValue.Size = new System.Drawing.Size(176, 13);
-         this.labelKeyValue.TabIndex = 6;
-         this.labelKeyValue.Text = "Chave de integração a ser usada:";
+         this.textBoxTechPassword.Location = new System.Drawing.Point(306, 223);
+         this.textBoxTechPassword.Name = "textBoxTechPassword";
+         this.textBoxTechPassword.Size = new System.Drawing.Size(182, 22);
+         this.textBoxTechPassword.TabIndex = 15;
          // 
-         // textBoxKeyValue
+         // labelSenhaTecnica
          // 
-         this.textBoxKeyValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
-         this.textBoxKeyValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
-         this.textBoxKeyValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this.textBoxKeyValue.ForeColor = System.Drawing.Color.White;
-         this.textBoxKeyValue.Location = new System.Drawing.Point(577, 161);
-         this.textBoxKeyValue.Multiline = true;
-         this.textBoxKeyValue.Name = "textBoxKeyValue";
-         this.textBoxKeyValue.ReadOnly = true;
-         this.textBoxKeyValue.Size = new System.Drawing.Size(173, 161);
-         this.textBoxKeyValue.TabIndex = 7;
-         this.textBoxKeyValue.Text = "...";
-         this.textBoxKeyValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+         this.labelSenhaTecnica.AutoSize = true;
+         this.labelSenhaTecnica.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelSenhaTecnica.ForeColor = System.Drawing.Color.White;
+         this.labelSenhaTecnica.Location = new System.Drawing.Point(353, 207);
+         this.labelSenhaTecnica.Name = "labelSenhaTecnica";
+         this.labelSenhaTecnica.Size = new System.Drawing.Size(96, 17);
+         this.labelSenhaTecnica.TabIndex = 14;
+         this.labelSenhaTecnica.Text = "Senha técnica:";
+         // 
+         // checkBoxStartAdminAuto
+         // 
+         this.checkBoxStartAdminAuto.AutoSize = true;
+         this.checkBoxStartAdminAuto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.checkBoxStartAdminAuto.ForeColor = System.Drawing.Color.White;
+         this.checkBoxStartAdminAuto.Location = new System.Drawing.Point(206, 285);
+         this.checkBoxStartAdminAuto.Name = "checkBoxStartAdminAuto";
+         this.checkBoxStartAdminAuto.Size = new System.Drawing.Size(385, 29);
+         this.checkBoxStartAdminAuto.TabIndex = 16;
+         this.checkBoxStartAdminAuto.Text = "Iniciar administrativa automaticamente?";
+         this.checkBoxStartAdminAuto.UseVisualStyleBackColor = true;
+         // 
+         // buttonAdmin
+         // 
+         this.buttonAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(3)))), ((int)(((byte)(48)))));
+         this.buttonAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.buttonAdmin.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.buttonAdmin.ForeColor = System.Drawing.Color.White;
+         this.buttonAdmin.Location = new System.Drawing.Point(306, 371);
+         this.buttonAdmin.Name = "buttonAdmin";
+         this.buttonAdmin.Size = new System.Drawing.Size(182, 27);
+         this.buttonAdmin.TabIndex = 17;
+         this.buttonAdmin.Text = "Iniciar administrativa";
+         this.buttonAdmin.UseVisualStyleBackColor = false;
          // 
          // PrincipalScreen
          // 
@@ -440,6 +760,12 @@ namespace ExemploIntegracaoApiControlPay
          this.panelDoesntHaveKey.PerformLayout();
          this.panelHasKey.ResumeLayout(false);
          this.panelHasKey.PerformLayout();
+         this.tabPageTerminal.ResumeLayout(false);
+         this.tabPageTerminal.PerformLayout();
+         this.tabPageTransacoes.ResumeLayout(false);
+         this.tabPageTransacoes.PerformLayout();
+         this.tabPageAdmin.ResumeLayout(false);
+         this.tabPageAdmin.PerformLayout();
          this.ResumeLayout(false);
 
       }
@@ -474,6 +800,28 @@ namespace ExemploIntegracaoApiControlPay
       private System.Windows.Forms.TextBox textBoxPersonIdValue;
       private System.Windows.Forms.Label labelKeyValue;
       private System.Windows.Forms.TextBox textBoxKeyValue;
+      private System.Windows.Forms.TextBox textBoxInfoTerminal2;
+      private System.Windows.Forms.TextBox textBoxInfoTerminal1;
+      private System.Windows.Forms.TextBox textBoxTitleTerminal;
+      private System.Windows.Forms.Button buttonCreateTerminal;
+      private System.Windows.Forms.ComboBox comboBoxTerminaisFisicos;
+      private System.Windows.Forms.ComboBox comboBoxTerminais;
+      private System.Windows.Forms.TextBox textBox1;
+      private System.Windows.Forms.Button buttonTransacionar;
+      private System.Windows.Forms.CheckBox checkBoxStartAuto;
+      private System.Windows.Forms.TextBox textBoxInfoStartAuto;
+      private System.Windows.Forms.TextBox textBoxValorTransacao;
+      private System.Windows.Forms.Label labelValorTransacao;
+      private System.Windows.Forms.Label labelFormaPagamento;
+      private System.Windows.Forms.ComboBox comboBoxFormaPagamento;
+      private System.Windows.Forms.TextBox textBoxInfoTransacoes;
+      private System.Windows.Forms.TextBox textBoxTitleTransacoes;
+      private System.Windows.Forms.Button buttonAdmin;
+      private System.Windows.Forms.CheckBox checkBoxStartAdminAuto;
+      private System.Windows.Forms.TextBox textBoxTechPassword;
+      private System.Windows.Forms.Label labelSenhaTecnica;
+      private System.Windows.Forms.TextBox textBoxInfoAdministrativas;
+      private System.Windows.Forms.TextBox textBoxTitleAdministrativas;
    }
 }
 
