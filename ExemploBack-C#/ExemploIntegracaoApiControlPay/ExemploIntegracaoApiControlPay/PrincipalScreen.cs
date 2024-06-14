@@ -190,9 +190,39 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
+      /// <summary>
+      /// Clique do botão para adicionar
+      /// chave de integração. Adiciona
+      /// a chave e o ID da Pessoa a serem
+      /// usados nas chamadas de APIs subsequentes.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void buttonAddKey_Click(object sender, EventArgs e)
       {
-         //TODO adicionar valores de Key e PersonId
+         string personId = textBoxPersonIdInput.Text;
+         string key = textBoxKeyInput.Text;
+
+         if(string.IsNullOrEmpty(personId) || string.IsNullOrEmpty(key))
+         {
+            MessageBox.Show("Para adicionar a chave de integração, é necessário preencher os campos de ID da Pessoa e da própria chave. Preencha-os e tente novamente.",
+                            "Chave de integração");
+            return;
+         }
+
+         //Adiciona as informações
+         //para uso posterior.
+         ApiKey = key;
+         PersonId = personId;
+
+         //Muda os valores dos textos para
+         //o usuário visualizar as infos.
+         textBoxPersonIdValue.Text = PersonId;
+         textBoxKeyValue.Text = ApiKey;
+
+         MessageBox.Show("Chave de integração adicionada com sucesso e será usada para chamadas da aplicação.",
+                         "Chave de integração");
+         return;
       }
 
       #endregion Button Click
