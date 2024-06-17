@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -87,7 +88,14 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          string json = JsonConvert.SerializeObject(loginBody);
          var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-         HttpResponseMessage response = CallPostApi("Login/Login",
+         string url = "Login/Login";
+
+         //Escrevendo a chamada no console para facilitar
+         //a leitura do usuário que estiver debuggando.
+         Debug.WriteLine($"Chamada (URL) -> {url}");
+         Debug.WriteLine($"Chamada (body) -> {loginBody}");
+
+         HttpResponseMessage response = CallPostApi(url,
                                                     httpContent,
                                                     out statusCode,
                                                     out string responseString,
@@ -153,7 +161,13 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          errorMessage = string.Empty;
          terminals = new Dictionary<string, string>();
 
-         HttpResponseMessage response = CallPostApi($"Terminal/GetByPessoaId?key={key}&pessoaId={personId}",
+         string url = $"Terminal/GetByPessoaId?key={key}&pessoaId={personId}";
+
+         //Escrevendo a chamada no console para facilitar
+         //a leitura do usuário que estiver debuggando.
+         Debug.WriteLine($"Chamada (URL) -> {url}");
+
+         HttpResponseMessage response = CallPostApi(url,
                                                     null,
                                                     out statusCode,
                                                     out string responseString,
@@ -242,6 +256,10 @@ namespace ExemploIntegracaoApiControlPay.Helpers
             statusCode = response.StatusCode.ToString();
 
             responseString = response.Content.ReadAsStringAsync().Result;
+
+            //Escrevendo a resposta no console para facilitar
+            //a leitura do usuário que estiver debuggando.
+            Debug.WriteLine($"Resposta (body) <- {responseString}");
 
             return response;
          }

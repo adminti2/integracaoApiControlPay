@@ -190,29 +190,8 @@ namespace ExemploIntegracaoApiControlPay
          MessageBox.Show("Login realizado com sucesso! ID de Pessoa e Chave de Integração salvos. Agora, usaremos estas informações para recuperar terminais e pontos de captura do usuário. Por favor, aguarde.",
                          "Login");
 
-         //Pesquisa os terminais para incluí-los
-         //na combobox de terminais.
-         bool gotTerminals = ApiHelper.GetTerminals(key,
-                                                    personId,
-                                                    out string terminalStatusCode,
-                                                    out string terminalErrorMessage,
-                                                    out IDictionary<string, string> terminals);
-
-         //Popula a combobox de terminais.
-         PopulateTerminalsComboBox(gotTerminals, terminals);
-
-         //TODO popular combobox de terminais físicos
-
-         if(!gotTerminals)
-         {
-            MessageBox.Show($"A API de pesquisa de terminais retornou {terminalStatusCode}, com a seguinte mensagem: {loginErrorMessage}",
-                            "Erro ao recuperar terminais");
-         }
-         else
-         {
-            MessageBox.Show("Terminais e pontos de captura recuperados com sucesso!",
-                            "Terminais");
-         }
+         //Populando as combos da tela de terminais.
+         PopulateComboboxes(key, personId);
 
          return;
       }
@@ -247,8 +226,12 @@ namespace ExemploIntegracaoApiControlPay
          textBoxPersonIdValue.Text = PersonId;
          textBoxKeyValue.Text = ApiKey;
 
-         MessageBox.Show("Chave de integração adicionada com sucesso! Ela será usada para as chamadas da aplicação.",
+         MessageBox.Show("Chave de integração adicionada com sucesso! Ela será usada para as chamadas da aplicação. Agora, usaremos estas informações para recuperar terminais e pontos de captura do usuário. Por favor, aguarde.",
                          "Chave de integração");
+
+         //Populando as combos da tela de terminais.
+         PopulateComboboxes(key, personId);
+
          return;
       }
 
@@ -274,6 +257,47 @@ namespace ExemploIntegracaoApiControlPay
       #endregion Key Press
 
       #region ComboBox
+
+      /// <summary>
+      /// Popula as ComboBoxes de Terminais
+      /// e PdCs (Terminais Físicos) da aplicação
+      /// de acordo com as informações do usuário.
+      /// </summary>
+      /// <param name="key">
+      /// Chave de integração.
+      /// </param>
+      /// <param name="personId">
+      /// ID da Pessoa.
+      /// </param>
+      private void PopulateComboboxes(string key, string personId)
+      {
+         //Pesquisa os terminais para incluí-los
+         //na combobox de terminais.
+         bool gotTerminals = ApiHelper.GetTerminals(key,
+                                                    personId,
+                                                    out string terminalStatusCode,
+                                                    out string terminalErrorMessage,
+                                                    out IDictionary<string, string> terminals);
+
+         //Popula a combobox de terminais.
+         PopulateTerminalsComboBox(gotTerminals, terminals);
+
+         //TODO popular combobox de terminais físicos.
+
+         //Popula a combobox de PdCs/Terminais Físicos.
+         //PopulatePdCComboBox(gotPdCs, pdcTerminals);
+
+         if(!gotTerminals)
+         {
+            MessageBox.Show($"A API de pesquisa de terminais retornou {terminalStatusCode}, com a seguinte mensagem: {terminalErrorMessage}",
+                            "Erro ao recuperar terminais");
+         }
+         else
+         {
+            MessageBox.Show("Terminais e pontos de captura recuperados com sucesso!",
+                            "Terminais");
+         }
+      }
 
       /// <summary>
       /// Popula a ComboBox de Terminais com as informações
