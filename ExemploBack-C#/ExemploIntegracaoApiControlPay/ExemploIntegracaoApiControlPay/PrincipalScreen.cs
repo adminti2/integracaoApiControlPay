@@ -133,6 +133,51 @@ namespace ExemploIntegracaoApiControlPay
       #region Button Click
 
       /// <summary>
+      /// Clique do botão para adicionar
+      /// chave de integração. Adiciona
+      /// a chave e o ID da Pessoa a serem
+      /// usados nas chamadas de APIs subsequentes.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void buttonAddKey_Click(object sender, EventArgs e)
+      {
+         string personId = textBoxPersonIdInput.Text;
+         string key = textBoxKeyInput.Text;
+
+         if(string.IsNullOrEmpty(personId) || string.IsNullOrEmpty(key))
+         {
+            MessageBox.Show("Para adicionar a chave de integração, é necessário preencher os campos de ID da Pessoa e da própria chave. Preencha-os e tente novamente.",
+                            "Chave de integração");
+            return;
+         }
+
+         //Adiciona as informações
+         //para uso posterior.
+         ApiKey = key;
+         PersonId = personId;
+
+         //Muda os valores dos textos para
+         //o usuário visualizar as infos.
+         textBoxPersonIdValue.Text = PersonId;
+         textBoxKeyValue.Text = ApiKey;
+
+         MessageBox.Show("Chave de integração adicionada com sucesso! Ela será usada para as chamadas da aplicação. Agora, usaremos estas informações para recuperar terminais e pontos de captura do usuário. Por favor, aguarde.",
+                         "Chave de integração");
+
+         //Populando as combos da tela de terminais.
+         PopulateComboboxes(key, personId);
+
+         return;
+      }
+
+      private void buttonCreateTerminal_Click(object sender, EventArgs e)
+      {
+         //TODO Adicionar criação de Terminal
+         //TODO Ao adicionar terminal, setar como o terminal ativo
+      }
+
+      /// <summary>
       /// Clique do botão Login,
       /// usado para realizar um login
       /// e receber uma chave de integração
@@ -196,45 +241,6 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
-      /// <summary>
-      /// Clique do botão para adicionar
-      /// chave de integração. Adiciona
-      /// a chave e o ID da Pessoa a serem
-      /// usados nas chamadas de APIs subsequentes.
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
-      private void buttonAddKey_Click(object sender, EventArgs e)
-      {
-         string personId = textBoxPersonIdInput.Text;
-         string key = textBoxKeyInput.Text;
-
-         if(string.IsNullOrEmpty(personId) || string.IsNullOrEmpty(key))
-         {
-            MessageBox.Show("Para adicionar a chave de integração, é necessário preencher os campos de ID da Pessoa e da própria chave. Preencha-os e tente novamente.",
-                            "Chave de integração");
-            return;
-         }
-
-         //Adiciona as informações
-         //para uso posterior.
-         ApiKey = key;
-         PersonId = personId;
-
-         //Muda os valores dos textos para
-         //o usuário visualizar as infos.
-         textBoxPersonIdValue.Text = PersonId;
-         textBoxKeyValue.Text = ApiKey;
-
-         MessageBox.Show("Chave de integração adicionada com sucesso! Ela será usada para as chamadas da aplicação. Agora, usaremos estas informações para recuperar terminais e pontos de captura do usuário. Por favor, aguarde.",
-                         "Chave de integração");
-
-         //Populando as combos da tela de terminais.
-         PopulateComboboxes(key, personId);
-
-         return;
-      }
-
       #endregion Button Click
 
       #region Key Press
@@ -273,30 +279,47 @@ namespace ExemploIntegracaoApiControlPay
       {
          //Pesquisa os terminais para incluí-los
          //na combobox de terminais.
-         bool gotTerminals = ApiHelper.GetTerminals(key,
+         bool gotTerminals = ApiHelper.GetTerminais(key,
                                                     personId,
                                                     out string terminalStatusCode,
                                                     out string terminalErrorMessage,
-                                                    out IDictionary<string, string> terminals);
+                                                    out IList<ComboBoxTerminal> terminals);
+
+         //Pesquisa os terminais físicos para incluí-los
+         //na combobox de terminais físicos.
+         bool gotFisicos = ApiHelper.GetTerminaisFisicos(key,
+                                                         personId,
+                                                         out string fisicoStatusCode,
+                                                         out string fisicoErrorMessage,
+                                                         out IList<ComboBoxTerminalFisico> pdcTerminals);
 
          //Popula a combobox de terminais.
          PopulateTerminalsComboBox(gotTerminals, terminals);
 
-         //TODO popular combobox de terminais físicos.
-
          //Popula a combobox de PdCs/Terminais Físicos.
-         //PopulatePdCComboBox(gotPdCs, pdcTerminals);
+         PopulateFisicosComboBox(gotFisicos, pdcTerminals);
+
+         if(gotTerminals && gotFisicos)
+         {
+            MessageBox.Show("Terminais e pontos de captura recuperados com sucesso!",
+                            "Terminais");
+
+            return;
+         }
 
          if(!gotTerminals)
          {
             MessageBox.Show($"A API de pesquisa de terminais retornou {terminalStatusCode}, com a seguinte mensagem: {terminalErrorMessage}",
                             "Erro ao recuperar terminais");
          }
-         else
+
+         if(!gotFisicos)
          {
-            MessageBox.Show("Terminais e pontos de captura recuperados com sucesso!",
-                            "Terminais");
+            MessageBox.Show($"A API de pesquisa de terminais físicos (PdCs) retornou {fisicoStatusCode}, com a seguinte mensagem: {fisicoErrorMessage}",
+                            "Erro ao recuperar terminais físicos");
          }
+
+         return;
       }
 
       /// <summary>
@@ -311,7 +334,7 @@ namespace ExemploIntegracaoApiControlPay
       /// Dicionário com ID e Nome dos Terminais retornados pela API.
       /// </param>
       private void PopulateTerminalsComboBox(bool gotTerminals,
-                                             IDictionary<string, string> terminals)
+                                             IList<ComboBoxTerminal> terminals)
       {
          if(gotTerminals && terminals != null && terminals.Count > 1)
          {
@@ -319,11 +342,7 @@ namespace ExemploIntegracaoApiControlPay
             comboBoxTerminais.Items.Clear();
 
             //Preenche a combobox de terminais.
-            var terminalDataSource = new List<ComboBoxTerminal>();
-            foreach(var item in terminals)
-            {
-               terminalDataSource.Add(new ComboBoxTerminal() { Id = item.Key, Nome = item.Value });
-            }
+            var terminalDataSource = terminals;
 
             comboBoxTerminais.DataSource = terminalDataSource;
             comboBoxTerminais.DisplayMember = "Nome";
@@ -341,6 +360,48 @@ namespace ExemploIntegracaoApiControlPay
             comboBoxTerminais.DropDownStyle = ComboBoxStyle.DropDownList;
          }
       }
+
+      /// <summary>
+      /// Popula a ComboBox de Terminais Físicos com as informações
+      /// de Terminais Físicos retornadas pela API de Terminais
+      /// Físicos do ControlPay.
+      /// </summary>
+      /// <param name="gotFisicos">
+      /// Se a API de terminais físicos retornou OK ou não à requisição.
+      /// </param>
+      /// <param name="pdcTerminals">
+      /// Dicionário com ID, Nome, PDC e ID de instalação dos Terminais
+      /// Físicos retornados pela API.
+      /// </param>
+      private void PopulateFisicosComboBox(bool gotFisicos, IList<ComboBoxTerminalFisico> pdcTerminals)
+
+      {
+         if(gotFisicos && pdcTerminals != null && pdcTerminals.Count > 1)
+         {
+            comboBoxTerminaisFisicos.DataSource = null;
+            comboBoxTerminaisFisicos.Items.Clear();
+
+            //Preenche a combobox de terminais físicos.
+            var terminalDataSource = pdcTerminals;
+
+            comboBoxTerminaisFisicos.DataSource = terminalDataSource;
+            comboBoxTerminaisFisicos.DisplayMember = "TerminalFisicoString";
+            comboBoxTerminaisFisicos.ValueMember = "Id";
+
+            comboBoxTerminaisFisicos.DropDownStyle = ComboBoxStyle.DropDownList;
+         }
+         else
+         {
+            comboBoxTerminaisFisicos.DataSource = null;
+            comboBoxTerminaisFisicos.Items.Clear();
+
+            //Preenche a combobox com "Nenhum PdC disponível"
+            comboBoxTerminaisFisicos.Items.AddRange(new object[] { "Nenhum PdC disponível" });
+            comboBoxTerminaisFisicos.DropDownStyle = ComboBoxStyle.DropDownList;
+         }
+      }
+
+      //TODO ao criar um terminal ou selecionar um na combobox, colocar ele como selecionado e preencher a labelTerminalUsado com o nome dele.
 
       #endregion ComboBox
    }

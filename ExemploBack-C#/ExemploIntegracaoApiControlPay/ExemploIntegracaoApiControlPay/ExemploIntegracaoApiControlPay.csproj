@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Objects\ComboBoxTerminal.cs" />
+    <Compile Include="Objects\ComboBoxTerminalFisico.cs" />
     <Compile Include="PrincipalScreen.cs">
       <SubType>Form</SubType>
     </Compile>

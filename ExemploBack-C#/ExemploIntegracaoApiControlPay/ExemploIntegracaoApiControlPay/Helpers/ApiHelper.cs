@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ExemploIntegracaoApiControlPay.Objects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -126,6 +127,96 @@ namespace ExemploIntegracaoApiControlPay.Helpers
       }
 
       /// <summary>
+      /// Pesquisa terminais físicos de
+      /// uma pessoa dado o ID desta pessoa.
+      /// </summary>
+      /// <param name="key">
+      /// Chave de integração.
+      /// </param>
+      /// <param name="personId">
+      /// ID de uma Pessoa.
+      /// </param>
+      /// <param name="statusCode">
+      /// Código de status da requisição
+      /// HTTP que será realizada.
+      /// </param>
+      /// <param name="errorMessage">
+      /// Possível mensagem de erro a ser
+      /// retornada pela API.
+      /// </param>
+      /// <param name="pdcTerminals">
+      /// Dicionário com informações de ID
+      /// e nome de terminais.
+      /// </param>
+      /// <returns>
+      /// Booleano indicando se a pesquisa foi
+      /// ou não realizada com sucesso.
+      /// </returns>
+      public static bool GetTerminaisFisicos(string key,
+                                             string personId,
+                                             out string statusCode,
+                                             out string errorMessage,
+                                             out IList<ComboBoxTerminalFisico> pdcTerminals)
+      {
+         statusCode = string.Empty;
+         errorMessage = string.Empty;
+         pdcTerminals = new List<ComboBoxTerminalFisico>();
+
+         string url = $"TerminalFisico/GetByPessoaId?key={key}&pessoaId={personId}";
+
+         //Escrevendo a chamada no console para facilitar
+         //a leitura do usuário que estiver debuggando.
+         Debug.WriteLine($"Chamada (URL) -> {url}");
+
+         HttpResponseMessage response = CallPostApi(url,
+                                                    null,
+                                                    out statusCode,
+                                                    out string responseString,
+                                                    out errorMessage);
+
+         if(response == null)
+            return false;
+
+         var pdcTerminaisResult = JsonConvert.DeserializeObject<dynamic>(responseString);
+
+         if(!response.IsSuccessStatusCode)
+         {
+            errorMessage = pdcTerminaisResult.message;
+            return false;
+         }
+
+         if(pdcTerminaisResult.terminaisFisicos == null)
+         {
+            errorMessage = "Houve um erro ao recuperar os terminais físicos (representações dos PdCs) do usuário. Tente novamente.";
+            return false;
+         }
+
+         //Retorna null para pessoa que não tem
+         //terminais físicos cadastrados.
+         if(pdcTerminaisResult.terminaisFisicos.Count < 1)
+         {
+            pdcTerminals = null;
+            return true;
+         }
+
+         //Preenche o dictionary para uso da combobox.
+         foreach(var terminalFisico in pdcTerminaisResult.terminaisFisicos)
+         {
+            ComboBoxTerminalFisico terf = new ComboBoxTerminalFisico()
+            {
+               Id = terminalFisico.id,
+               Nome = terminalFisico.nome,
+               InstalacaoId = terminalFisico.instalacaoId,
+               PontoCaptura = terminalFisico.pontoCaptura
+            };
+
+            pdcTerminals.Add(terf);
+         }
+
+         return true;
+      }
+
+      /// <summary>
       /// Pesquisa terminais de uma pessoa
       /// dado o ID desta pessoa.
       /// </summary>
@@ -151,15 +242,15 @@ namespace ExemploIntegracaoApiControlPay.Helpers
       /// Booleano indicando se a pesquisa foi
       /// ou não realizada com sucesso.
       /// </returns>
-      public static bool GetTerminals(string key,
+      public static bool GetTerminais(string key,
                                       string personId,
                                       out string statusCode,
                                       out string errorMessage,
-                                      out IDictionary<string, string> terminals)
+                                      out IList<ComboBoxTerminal> terminals)
       {
          statusCode = string.Empty;
          errorMessage = string.Empty;
-         terminals = new Dictionary<string, string>();
+         terminals = new List<ComboBoxTerminal>();
 
          string url = $"Terminal/GetByPessoaId?key={key}&pessoaId={personId}";
 
@@ -201,10 +292,13 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          //Preenche o dictionary para uso da combobox.
          foreach(var terminal in terminaisResult.terminais)
          {
-            string id = terminal.id;
-            string nome = terminal.nome;
+            ComboBoxTerminal term = new ComboBoxTerminal()
+            {
+               Id = terminal.id,
+               Nome = terminal.nome
+            };
 
-            terminals.Add(id, nome);
+            terminals.Add(term);
          }
 
          return true;

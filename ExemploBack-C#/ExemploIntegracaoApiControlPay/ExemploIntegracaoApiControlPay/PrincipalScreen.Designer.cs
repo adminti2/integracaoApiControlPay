@@ -55,6 +55,8 @@
          this.textBoxPersonIdInput = new System.Windows.Forms.TextBox();
          this.labelPersonIdInput = new System.Windows.Forms.Label();
          this.tabPageTerminal = new System.Windows.Forms.TabPage();
+         this.labelTerminalUsado = new System.Windows.Forms.Label();
+         this.textBoxTerminalUsado = new System.Windows.Forms.TextBox();
          this.comboBoxTerminais = new System.Windows.Forms.ComboBox();
          this.textBox1 = new System.Windows.Forms.TextBox();
          this.buttonCreateTerminal = new System.Windows.Forms.Button();
@@ -418,6 +420,8 @@
          // tabPageTerminal
          // 
          this.tabPageTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.tabPageTerminal.Controls.Add(this.labelTerminalUsado);
+         this.tabPageTerminal.Controls.Add(this.textBoxTerminalUsado);
          this.tabPageTerminal.Controls.Add(this.comboBoxTerminais);
          this.tabPageTerminal.Controls.Add(this.textBox1);
          this.tabPageTerminal.Controls.Add(this.buttonCreateTerminal);
@@ -432,13 +436,38 @@
          this.tabPageTerminal.TabIndex = 2;
          this.tabPageTerminal.Text = "Terminal";
          // 
+         // labelTerminalUsado
+         // 
+         this.labelTerminalUsado.AutoSize = true;
+         this.labelTerminalUsado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.labelTerminalUsado.ForeColor = System.Drawing.Color.White;
+         this.labelTerminalUsado.Location = new System.Drawing.Point(534, 356);
+         this.labelTerminalUsado.Name = "labelTerminalUsado";
+         this.labelTerminalUsado.Size = new System.Drawing.Size(140, 17);
+         this.labelTerminalUsado.TabIndex = 10;
+         this.labelTerminalUsado.Text = "Terminal a ser usado:";
+         // 
+         // textBoxTerminalUsado
+         // 
+         this.textBoxTerminalUsado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(126)))), ((int)(((byte)(255)))));
+         this.textBoxTerminalUsado.BorderStyle = System.Windows.Forms.BorderStyle.None;
+         this.textBoxTerminalUsado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.textBoxTerminalUsado.ForeColor = System.Drawing.Color.White;
+         this.textBoxTerminalUsado.Location = new System.Drawing.Point(524, 376);
+         this.textBoxTerminalUsado.Name = "textBoxTerminalUsado";
+         this.textBoxTerminalUsado.ReadOnly = true;
+         this.textBoxTerminalUsado.Size = new System.Drawing.Size(162, 18);
+         this.textBoxTerminalUsado.TabIndex = 11;
+         this.textBoxTerminalUsado.Text = "...";
+         this.textBoxTerminalUsado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+         // 
          // comboBoxTerminais
          // 
          this.comboBoxTerminais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
          this.comboBoxTerminais.FormattingEnabled = true;
          this.comboBoxTerminais.Items.AddRange(new object[] {
             "Nenhum terminal disponível"});
-         this.comboBoxTerminais.Location = new System.Drawing.Point(510, 376);
+         this.comboBoxTerminais.Location = new System.Drawing.Point(517, 290);
          this.comboBoxTerminais.Name = "comboBoxTerminais";
          this.comboBoxTerminais.Size = new System.Drawing.Size(170, 21);
          this.comboBoxTerminais.TabIndex = 9;
@@ -449,7 +478,7 @@
          this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
          this.textBox1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.textBox1.ForeColor = System.Drawing.Color.White;
-         this.textBox1.Location = new System.Drawing.Point(444, 308);
+         this.textBox1.Location = new System.Drawing.Point(451, 222);
          this.textBox1.Multiline = true;
          this.textBox1.Name = "textBox1";
          this.textBox1.ReadOnly = true;
@@ -464,12 +493,13 @@
          this.buttonCreateTerminal.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
          this.buttonCreateTerminal.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.buttonCreateTerminal.ForeColor = System.Drawing.Color.White;
-         this.buttonCreateTerminal.Location = new System.Drawing.Point(232, 370);
+         this.buttonCreateTerminal.Location = new System.Drawing.Point(136, 413);
          this.buttonCreateTerminal.Name = "buttonCreateTerminal";
          this.buttonCreateTerminal.Size = new System.Drawing.Size(120, 27);
          this.buttonCreateTerminal.TabIndex = 7;
          this.buttonCreateTerminal.Text = "Criar terminal";
          this.buttonCreateTerminal.UseVisualStyleBackColor = false;
+         this.buttonCreateTerminal.Click += new System.EventHandler(this.buttonCreateTerminal_Click);
          // 
          // comboBoxTerminaisFisicos
          // 
@@ -479,7 +509,7 @@
             "Nenhum PdC disponível"});
          this.comboBoxTerminaisFisicos.Location = new System.Drawing.Point(32, 374);
          this.comboBoxTerminaisFisicos.Name = "comboBoxTerminaisFisicos";
-         this.comboBoxTerminaisFisicos.Size = new System.Drawing.Size(170, 21);
+         this.comboBoxTerminaisFisicos.Size = new System.Drawing.Size(336, 21);
          this.comboBoxTerminaisFisicos.TabIndex = 6;
          // 
          // textBoxInfoTerminal2
@@ -825,5 +855,7 @@
       private System.Windows.Forms.Label labelSenhaTecnica;
       private System.Windows.Forms.TextBox textBoxInfoAdministrativas;
       private System.Windows.Forms.TextBox textBoxTitleAdministrativas;
+      private System.Windows.Forms.Label labelTerminalUsado;
+      private System.Windows.Forms.TextBox textBoxTerminalUsado;
    }
 }
