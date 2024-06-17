@@ -1,5 +1,7 @@
 ﻿using ExemploIntegracaoApiControlPay.Helpers;
+using ExemploIntegracaoApiControlPay.Objects;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -153,8 +155,8 @@ namespace ExemploIntegracaoApiControlPay
          //Login/Login
          bool didLogin = ApiHelper.DoLogin(cpfCnpj,
                                            password,
-                                           out string statusCode,
-                                           out string errorMessage,
+                                           out string loginStatusCode,
+                                           out string loginErrorMessage,
                                            out string personId,
                                            out string key);
 
@@ -162,15 +164,15 @@ namespace ExemploIntegracaoApiControlPay
          if(!didLogin)
          {
             //Erro de aplicação.
-            if(string.IsNullOrEmpty(statusCode))
+            if(string.IsNullOrEmpty(loginStatusCode))
             {
-               MessageBox.Show($"Houve um erro durante o processamento do Login pela aplicação: {errorMessage}",
+               MessageBox.Show($"Houve um erro durante o processamento do Login pela aplicação: {loginErrorMessage}",
                                "Erro");
                return;
             }
 
             //Erro retornado da API.
-            MessageBox.Show($"A API retornou {statusCode} para a chamada de login, com a seguinte mensagem: {errorMessage}",
+            MessageBox.Show($"A API retornou {loginStatusCode} para a chamada de login, com a seguinte mensagem: {loginErrorMessage}",
                             "Erro de Login");
             return;
          }
@@ -185,8 +187,33 @@ namespace ExemploIntegracaoApiControlPay
          textBoxPersonIdValue.Text = PersonId;
          textBoxKeyValue.Text = ApiKey;
 
-         MessageBox.Show("Login realizado com sucesso! ID de Pessoa e Chave de Integração salvos.",
-                         "API de Login");
+         MessageBox.Show("Login realizado com sucesso! ID de Pessoa e Chave de Integração salvos. Agora, usaremos estas informações para recuperar terminais e pontos de captura do usuário. Por favor, aguarde.",
+                         "Login");
+
+         //Pesquisa os terminais para incluí-los
+         //na combobox de terminais.
+         bool gotTerminals = ApiHelper.GetTerminals(key,
+                                                    personId,
+                                                    out string terminalStatusCode,
+                                                    out string terminalErrorMessage,
+                                                    out IDictionary<string, string> terminals);
+
+         //Popula a combobox de terminais.
+         PopulateTerminalsComboBox(gotTerminals, terminals);
+
+         //TODO popular combobox de terminais físicos
+
+         if(!gotTerminals)
+         {
+            MessageBox.Show($"A API de pesquisa de terminais retornou {terminalStatusCode}, com a seguinte mensagem: {loginErrorMessage}",
+                            "Erro ao recuperar terminais");
+         }
+         else
+         {
+            MessageBox.Show("Terminais e pontos de captura recuperados com sucesso!",
+                            "Terminais");
+         }
+
          return;
       }
 
@@ -220,7 +247,7 @@ namespace ExemploIntegracaoApiControlPay
          textBoxPersonIdValue.Text = PersonId;
          textBoxKeyValue.Text = ApiKey;
 
-         MessageBox.Show("Chave de integração adicionada com sucesso e será usada para chamadas da aplicação.",
+         MessageBox.Show("Chave de integração adicionada com sucesso! Ela será usada para as chamadas da aplicação.",
                          "Chave de integração");
          return;
       }
@@ -245,5 +272,52 @@ namespace ExemploIntegracaoApiControlPay
       }
 
       #endregion Key Press
+
+      #region ComboBox
+
+      /// <summary>
+      /// Popula a ComboBox de Terminais com as informações
+      /// de Terminais retornadas pela API de Terminais do
+      /// ControlPay.
+      /// </summary>
+      /// <param name="gotTerminals">
+      /// Se a API de terminais retornou OK ou não à requisição.
+      /// </param>
+      /// <param name="terminals">
+      /// Dicionário com ID e Nome dos Terminais retornados pela API.
+      /// </param>
+      private void PopulateTerminalsComboBox(bool gotTerminals,
+                                             IDictionary<string, string> terminals)
+      {
+         if(gotTerminals && terminals != null && terminals.Count > 1)
+         {
+            comboBoxTerminais.DataSource = null;
+            comboBoxTerminais.Items.Clear();
+
+            //Preenche a combobox de terminais.
+            var terminalDataSource = new List<ComboBoxTerminal>();
+            foreach(var item in terminals)
+            {
+               terminalDataSource.Add(new ComboBoxTerminal() { Id = item.Key, Nome = item.Value });
+            }
+
+            comboBoxTerminais.DataSource = terminalDataSource;
+            comboBoxTerminais.DisplayMember = "Nome";
+            comboBoxTerminais.ValueMember = "Id";
+
+            comboBoxTerminais.DropDownStyle = ComboBoxStyle.DropDownList;
+         }
+         else
+         {
+            comboBoxTerminais.DataSource = null;
+            comboBoxTerminais.Items.Clear();
+
+            //Preenche a combobox com "Nenhum terminal disponível"
+            comboBoxTerminais.Items.AddRange(new object[] { "Nenhum terminal disponível" });
+            comboBoxTerminais.DropDownStyle = ComboBoxStyle.DropDownList;
+         }
+      }
+
+      #endregion ComboBox
    }
 }

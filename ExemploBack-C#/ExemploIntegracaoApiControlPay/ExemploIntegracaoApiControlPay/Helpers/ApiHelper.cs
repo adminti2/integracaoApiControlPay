@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,6 +13,8 @@ namespace ExemploIntegracaoApiControlPay.Helpers
    /// </summary>
    public static class ApiHelper
    {
+      #region Public methods
+
       /// <summary>
       /// Http Client usado para chamadas de
       /// API usadas na aplicação.
@@ -59,7 +62,10 @@ namespace ExemploIntegracaoApiControlPay.Helpers
       /// <param name="key">
       /// Chave de integração da Pessoa retornada pela API de login.
       /// </param>
-      /// <returns></returns>
+      /// <returns>
+      /// Booleano indicando se o Login foi
+      /// ou não realizado com sucesso.
+      /// </returns>
       public static bool DoLogin(string cpfCnpj,
                                  string password,
                                  out string statusCode,
@@ -73,55 +79,179 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          statusCode = string.Empty;
 
          var loginBody = new
-         { 
+         {
             cpfCnpj = cpfCnpj,
-            senha = password, 
+            senha = password,
          };
 
          string json = JsonConvert.SerializeObject(loginBody);
          var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
+         HttpResponseMessage response = CallPostApi("Login/Login",
+                                                    httpContent,
+                                                    out statusCode,
+                                                    out string responseString,
+                                                    out errorMessage);
+
+         //Erro durante o processamento da API.
+         if(response == null)
+            return false;
+
+         var loginResult = JsonConvert.DeserializeObject<dynamic>(responseString);
+
+         if(!response.IsSuccessStatusCode)
+         {
+            errorMessage = loginResult.message;
+            return false;
+         }
+
+         if(loginResult.pessoa == null)
+         {
+            errorMessage = "Houve um erro ao realizar o login. Confira as credenciais e tente novamente.";
+            return false;
+         }
+
+         personId = loginResult.pessoa.id;
+         key = loginResult.pessoa.key;
+
+         return true;
+      }
+
+      /// <summary>
+      /// Pesquisa terminais de uma pessoa
+      /// dado o ID desta pessoa.
+      /// </summary>
+      /// <param name="key">
+      /// Chave de integração.
+      /// </param>
+      /// <param name="personId">
+      /// ID de uma Pessoa.
+      /// </param>
+      /// <param name="statusCode">
+      /// Código de status da requisição
+      /// HTTP que será realizada.
+      /// </param>
+      /// <param name="errorMessage">
+      /// Possível mensagem de erro a ser
+      /// retornada pela API.
+      /// </param>
+      /// <param name="terminals">
+      /// Dicionário com informações de ID
+      /// e nome de terminais.
+      /// </param>
+      /// <returns>
+      /// Booleano indicando se a pesquisa foi
+      /// ou não realizada com sucesso.
+      /// </returns>
+      public static bool GetTerminals(string key,
+                                      string personId,
+                                      out string statusCode,
+                                      out string errorMessage,
+                                      out IDictionary<string, string> terminals)
+      {
+         statusCode = string.Empty;
+         errorMessage = string.Empty;
+         terminals = new Dictionary<string, string>();
+
+         HttpResponseMessage response = CallPostApi($"Terminal/GetByPessoaId?key={key}&pessoaId={personId}",
+                                                    null,
+                                                    out statusCode,
+                                                    out string responseString,
+                                                    out errorMessage);
+
+         if(response == null)
+            return false;
+
+         var terminaisResult = JsonConvert.DeserializeObject<dynamic>(responseString);
+
+         if(!response.IsSuccessStatusCode)
+         {
+            errorMessage = terminaisResult.message;
+            return false;
+         }
+
+         if(terminaisResult.terminais == null)
+         {
+            errorMessage = "Houve um erro ao recuperar os terminais do usuário. Tente novamente.";
+            return false;
+         }
+
+         //Retorna null para pessoa que não tem
+         //terminais cadastrados.
+         if(terminaisResult.terminais.Count < 1)
+         {
+            terminals = null;
+            return true;
+         }
+
+         //Preenche o dictionary para uso da combobox.
+         foreach(var terminal in terminaisResult.terminais)
+         {
+            string id = terminal.id;
+            string nome = terminal.nome;
+
+            terminals.Add(id, nome);
+         }
+
+         return true;
+      }
+
+      #endregion Public methods
+
+      #region Private methods
+
+      /// <summary>
+      /// Método genérico para chamadas POST
+      /// de APIs do ControlPay.
+      /// </summary>
+      /// <param name="url">
+      /// URL da chamada.
+      /// </param>
+      /// <param name="httpContent">
+      /// HTTP Content da chamada.
+      /// </param>
+      /// <param name="statusCode">
+      /// Código de retorno.
+      /// </param>
+      /// <param name="responseString">
+      /// Resposta da API após realizado
+      /// o ReadAsStringAsync do conteúdo.
+      /// </param>
+      /// <param name="errorMessage">
+      /// Mensagem de erro, caso ocorra um
+      /// erro durante o processamento do
+      /// método.
+      /// </param>
+      /// <returns>
+      /// Resposta da API completa.
+      /// </returns>
+      private static HttpResponseMessage CallPostApi(string url,
+                                                     StringContent httpContent,
+                                                     out string statusCode,
+                                                     out string responseString,
+                                                     out string errorMessage)
+      {
+         statusCode = string.Empty;
+         responseString = string.Empty;
+         errorMessage = string.Empty;
+
          try
          {
-            HttpResponseMessage response = ApiClient.PostAsync("Login/Login", httpContent).Result;
+            HttpResponseMessage response = ApiClient.PostAsync(url, httpContent).Result;
 
             statusCode = response.StatusCode.ToString();
 
-            var responseString = response.Content.ReadAsStringAsync();
+            responseString = response.Content.ReadAsStringAsync().Result;
 
-            var loginResult = JsonConvert.DeserializeObject<dynamic>(responseString.Result);
-
-            if(!response.IsSuccessStatusCode)
-            {
-               errorMessage = loginResult.message;
-               return false;
-            }
-
-            if(loginResult.pessoa == null)
-            {
-               errorMessage = "Houve um erro ao realizar o login. Confira as credenciais e tente novamente.";
-               return false;
-            }
-
-            personId = loginResult.pessoa.id;
-            key = loginResult.pessoa.key;
-
-            return true;
+            return response;
          }
          catch(Exception ex)
          {
             errorMessage = ex.Message;
-            return false;
+            return null;
          }
       }
 
-      public static void GetTerminals(string key, string personId)
-      {
-         //TODO TerminalGetByPessoaId
-         
-         //var response = await ApiClient.GetAsync($"Terminal/GetByPessoaId?key={key}&pessoaId={personId}");
-
-         return;
-      }
+      #endregion Private methods
    }
 }
