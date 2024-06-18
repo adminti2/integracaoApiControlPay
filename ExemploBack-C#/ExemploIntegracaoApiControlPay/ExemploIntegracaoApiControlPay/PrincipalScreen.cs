@@ -316,6 +316,11 @@ namespace ExemploIntegracaoApiControlPay
          //IniciarAutomaticamente
          bool startAuto = checkBoxStartAuto.Checked;
 
+         MessageBox.Show("Sua intenção de venda será criada agora."
+                              + Environment.NewLine + "Atente-se ao fato de que, para transações TEF, o PayGo Windows deve estar aberto e rodando antes de prosseguir."
+                              + Environment.NewLine + "Caso não esteja, a API terá um tempo de resposta mais alto, por estar esperando o PayGo Windows, e então a intenção de venda expirará.",
+                         "Venda");
+
          //Venda/Vender
          bool didCreateIntencaoVenda = ApiHelper.Vender(ApiKey,
                                                         TerminalId,
