@@ -95,7 +95,7 @@ function CreateTerminal() {
 
   //Body da requisição de Login
   const terminalBody = {
-    nome: "TerminalExemplo",
+    nome: "TerminalExemploJS",
     pessoaId: personId,
     terminalFisicoId: tfId,
     habilitarPDV: true,
