@@ -167,6 +167,7 @@ namespace ExemploIntegracaoApiControlPay
             return;
          }
 
+         //Terminal/Insert
          bool didCreateTerminal = ApiHelper.CreateTerminal(ApiKey,
                                                            PersonId,
                                                            termFisId,
@@ -276,9 +277,77 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
+      /// <summary>
+      /// Clique do botão de transacionar. Cria uma
+      /// intenção de venda no ControlPay.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void buttonTransacionar_Click(object sender, EventArgs e)
       {
+         if(string.IsNullOrEmpty(ApiKey) || string.IsNullOrEmpty(PersonId) || TerminalId < 1)
+         {
+            MessageBox.Show("Para realizar uma venda, é preciso primeiro ter uma chave de integração cadastrada na aplicação e um terminal válido. Realize o login ou adicione uma chave, e escolha um terminal para transacionar.",
+                            "Venda");
 
+            return;
+         }
+
+         //FormaPagamento
+         string paymentMethodString = comboBoxFormaPagamento.SelectedValue.ToString();
+         if(!int.TryParse(paymentMethodString, out int paymentMethod))
+         {
+            MessageBox.Show("Método de pagamento necessita ser escolhido antes de realizar uma transação.",
+                            "Venda");
+
+            return;
+         }
+
+         //Valor
+         string transacValue = textBoxValorTransacao.Text;
+         if(string.IsNullOrEmpty(transacValue))
+         {
+            MessageBox.Show("Método de pagamento necessita ser escolhido antes de realizar uma transação.",
+                            "Venda");
+
+            return;
+         }
+
+         //IniciarAutomaticamente
+         bool startAuto = checkBoxStartAuto.Checked;
+
+         //Venda/Vender
+         bool didCreateIntencaoVenda = ApiHelper.Vender(ApiKey,
+                                                        TerminalId,
+                                                        paymentMethod,
+                                                        transacValue,
+                                                        startAuto,
+                                                        out string vendaStatusCode,
+                                                        out string vendaErrorMessage,
+                                                        out string intencaoVendaId);
+
+         //Erro
+         if(!didCreateIntencaoVenda)
+         {
+            MessageBox.Show($"Ocorreu um erro criar uma intenção de venda. A API de venda retornou {vendaStatusCode}, com a seguinte mensagem: {vendaErrorMessage}",
+                            "Erro ao intenção de venda");
+
+            return;
+         }
+
+         string okMessage = "Intenção de venda";
+         
+         if(!string.IsNullOrEmpty(intencaoVendaId))
+            okMessage += $" de ID {intencaoVendaId}";
+
+         okMessage += " criada com sucesso!"
+            + Environment.NewLine + "Caso tenha realizado uma transação TEF, verifique o PayGo Windows instalado e continue a transação nele."
+            + Environment.NewLine + "Caso tenha realizado uma transação com Gateway, verifique o output de Debug da aplicação para recuperar o link de redirecionamento para o Gateway.";
+
+         MessageBox.Show(okMessage,
+                         "Venda");
+
+         return;
       }
 
       #endregion Button Click
@@ -345,16 +414,16 @@ namespace ExemploIntegracaoApiControlPay
       /// </param>
       private void PopulateComboboxes(string key, string personId)
       {
-         //Pesquisa os terminais para incluí-los
-         //na combobox de terminais.
+         //Terminal/GetByPessoaId: Pesquisa os terminais
+         //para incluí-los na combobox de terminais.
          bool gotTerminals = ApiHelper.GetTerminais(key,
                                                     personId,
                                                     out string terminalStatusCode,
                                                     out string terminalErrorMessage,
                                                     out IList<ComboBoxTerminal> terminals);
 
-         //Pesquisa os terminais físicos para incluí-los
-         //na combobox de terminais físicos.
+         //TerminalFisico/GetByPessoaId: Pesquisa os terminais
+         //físicos para incluí-los na combobox de terminais físicos.
          bool gotFisicos = ApiHelper.GetTerminaisFisicos(key,
                                                          personId,
                                                          out string fisicoStatusCode,

@@ -96,6 +96,18 @@ namespace ExemploIntegracaoApiControlPay.Helpers
             permiteAcrescimo = false,
             solicitarCliente = false,
             solicitarReferencia = false,
+
+            //Identificador TEF é uma propriedade referente
+            //a configurações de multi-EC. Sendo assim, não
+            //é necessária para este exemplo.
+            //identificadorTef = "01234567890",
+
+            //As configurações de impressão não
+            //foram adicionadas neste exemplo.
+            //impressoraId = 8,
+            //imprimirProdutos = false,
+            //imprimirCupomLojista = false,
+            //imprimirCupomCliente = false
          };
 
          string json = JsonConvert.SerializeObject(terminalBody);
@@ -396,6 +408,75 @@ namespace ExemploIntegracaoApiControlPay.Helpers
 
             terminals.Add(term);
          }
+
+         return true;
+      }
+
+      public static bool Vender(string key,
+                                int terminalId,
+                                int paymentMethod,
+                                string transacValue,
+                                bool startAuto,
+                                out string statusCode,
+                                out string errorMessage,
+                                out string intencaoVendaId)
+      {
+         statusCode = string.Empty;
+         errorMessage = string.Empty;
+         intencaoVendaId = string.Empty;
+
+         string url = $"Venda/Vender?key={key}";
+
+         var vendaBody = new
+         {
+            formaPagamentoId = paymentMethod,
+            terminalId = terminalId,
+            valorTotalVendido = transacValue,
+            observacao = "Esta venda foi realizada usando a aplicação exemplo fornecida pelo time de desenvolvimento do ControlPay.",
+            aguardarTefIniciarTransacao = startAuto,
+
+            //Exemplo de body acima:
+            // formaPagamentoId = 21,
+            // terminalId = 1234,
+            // valorTotalVendido = "10,00",
+            // observacao = "Obs. atrelada à venda para uso de quem realizou a venda.",
+            // aguardarTefIniciarTransacao = true,
+
+            //Propriedades opcionais (exemplos):
+            // pedidoId = 123,            //Utilizado para Pedidos no ControlPay.
+            // preDatado = true,          //Para transações pré-datadas.
+            // aVista = true,             //Para transações à vista.
+            // parcelamentoAdmin = true,  //Tipo de parcelamento (booleano indicando admin/emissor ou loja/estabelecimento)
+            // quantidadeParcelas = 1     //Quantidade de parcelas quando há parcelamento.
+         };
+
+         string json = JsonConvert.SerializeObject(vendaBody);
+         var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+         //Escrevendo a chamada no console para facilitar
+         //a leitura do usuário que estiver debuggando.
+         Debug.WriteLine($"Chamada (URL) -> {url}");
+         Debug.WriteLine($"Chamada (body) -> {vendaBody}");
+
+         HttpResponseMessage response = CallPostApi(url,
+                                                    httpContent,
+                                                    out statusCode,
+                                                    out string responseString,
+                                                    out errorMessage);
+
+         if(response == null)
+            return false;
+
+         var vendaResult = JsonConvert.DeserializeObject<dynamic>(responseString);
+
+         if(!response.IsSuccessStatusCode)
+         {
+            errorMessage = vendaResult.message;
+            return false;
+         }
+
+         if(vendaResult.intencaoVenda != null)
+            intencaoVendaId = vendaResult.intencaoVenda.id;
 
          return true;
       }
