@@ -772,7 +772,7 @@
          this.textBoxTitleAdministrativas.Multiline = true;
          this.textBoxTitleAdministrativas.Name = "textBoxTitleAdministrativas";
          this.textBoxTitleAdministrativas.ReadOnly = true;
-         this.textBoxTitleAdministrativas.Size = new System.Drawing.Size(221, 57);
+         this.textBoxTitleAdministrativas.Size = new System.Drawing.Size(305, 57);
          this.textBoxTitleAdministrativas.TabIndex = 7;
          this.textBoxTitleAdministrativas.Text = "Administrativas";
          // 
