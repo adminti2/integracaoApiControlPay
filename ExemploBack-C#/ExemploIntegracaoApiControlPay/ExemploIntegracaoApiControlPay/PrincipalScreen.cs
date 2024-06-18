@@ -141,6 +141,12 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
+      /// <summary>
+      /// Clique do botão de iniciar transações administrativas.
+      /// Inicia uma administrativa que ocorrerá junto a um PayGo Windows.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void buttonAdmin_Click(object sender, EventArgs e)
       {
          if(string.IsNullOrEmpty(ApiKey) || string.IsNullOrEmpty(PersonId) || TerminalId < 1)
@@ -705,6 +711,10 @@ namespace ExemploIntegracaoApiControlPay
 
       #region Private methods
 
+      /// <summary>
+      /// Limpa as propriedades <see cref="ApiKey"/>,
+      /// <see cref="PersonId"/> e <see cref="TerminalId"/>.
+      /// </summary>
       private void ClearPropValues()
       {
          //Estado inicial da propriedades.
