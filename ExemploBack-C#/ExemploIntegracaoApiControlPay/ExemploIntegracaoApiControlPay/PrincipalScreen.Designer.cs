@@ -441,11 +441,11 @@
          this.labelTerminalUsado.AutoSize = true;
          this.labelTerminalUsado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.labelTerminalUsado.ForeColor = System.Drawing.Color.White;
-         this.labelTerminalUsado.Location = new System.Drawing.Point(534, 356);
+         this.labelTerminalUsado.Location = new System.Drawing.Point(514, 356);
          this.labelTerminalUsado.Name = "labelTerminalUsado";
-         this.labelTerminalUsado.Size = new System.Drawing.Size(140, 17);
+         this.labelTerminalUsado.Size = new System.Drawing.Size(178, 17);
          this.labelTerminalUsado.TabIndex = 10;
-         this.labelTerminalUsado.Text = "Terminal a ser usado:";
+         this.labelTerminalUsado.Text = "ID do Terminal a ser usado:";
          // 
          // textBoxTerminalUsado
          // 
@@ -471,6 +471,9 @@
          this.comboBoxTerminais.Name = "comboBoxTerminais";
          this.comboBoxTerminais.Size = new System.Drawing.Size(170, 21);
          this.comboBoxTerminais.TabIndex = 9;
+         this.comboBoxTerminais.SelectedIndexChanged += new System.EventHandler(this.CboxTerminalSelected);
+         this.comboBoxTerminais.DropDownClosed += new System.EventHandler(this.CboxTerminalSelected);
+         this.comboBoxTerminais.SelectedValueChanged += new System.EventHandler(this.CboxTerminalSelected);
          // 
          // textBox1
          // 

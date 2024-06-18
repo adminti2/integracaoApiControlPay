@@ -39,6 +39,102 @@ namespace ExemploIntegracaoApiControlPay.Helpers
       }
 
       /// <summary>
+      /// Criação de um novo terminal para a pessoa
+      /// que está sendo usada.
+      /// </summary>
+      /// <param name="key">
+      /// Chave de integração.
+      /// </param>
+      /// <param name="personId">
+      /// ID da Pessoa.
+      /// </param>
+      /// <param name="terminalFisicoId">
+      /// ID de Terminal Físico (PdC) ao qual
+      /// o terminal deverá ser atrelado.
+      /// </param>
+      /// <param name="statusCode">
+      /// Código de status da requisição
+      /// HTTP que será realizada.
+      /// </param>
+      /// <param name="errorMessage">
+      /// Possível mensagem de erro a ser
+      /// retornada pela API.
+      /// </param>
+      /// <param name="createdTerminalId">
+      /// ID do terminal que será criado.
+      /// </param>
+      /// <returns>
+      /// Booleano indicando se o terminal foi
+      /// ou não criado com sucesso.
+      /// </returns>
+      public static bool CreateTerminal(string key,
+                                        string personId,
+                                        int terminalFisicoId,
+                                        out string statusCode,
+                                        out string errorMessage,
+                                        out string createdTerminalId)
+      {
+         errorMessage = string.Empty;
+         statusCode = string.Empty;
+         createdTerminalId = string.Empty;
+
+         string url = $"Terminal/Insert?key={key}";
+
+         var terminalBody = new
+         {
+            nome = "TerminalExemploCSharp",
+            pessoaId = personId,
+            terminalFisicoId = terminalFisicoId,
+            habilitarPDV = true,
+            vendaPorValor = true,
+            vendaPorProduto = true,
+            habilitarPedidos = true,
+            permiteVendaParcelada = true,
+            parcelamentopadrao = "admin",
+            aguardaTef = true,
+            permiteDesconto = false,
+            permiteAcrescimo = false,
+            solicitarCliente = false,
+            solicitarReferencia = false,
+         };
+
+         string json = JsonConvert.SerializeObject(terminalBody);
+         var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+         //Escrevendo a chamada no console para facilitar
+         //a leitura do usuário que estiver debuggando.
+         Debug.WriteLine($"Chamada (URL) -> {url}");
+         Debug.WriteLine($"Chamada (body) -> {terminalBody}");
+
+         HttpResponseMessage response = CallPostApi(url,
+                                                    httpContent,
+                                                    out statusCode,
+                                                    out string responseString,
+                                                    out errorMessage);
+
+         if(response == null)
+            return false;
+
+         var terminalResult = JsonConvert.DeserializeObject<dynamic>(responseString);
+
+         if(!response.IsSuccessStatusCode)
+         {
+            errorMessage = terminalResult.message;
+            return false;
+         }
+
+         if(terminalResult.terminal == null)
+         {
+            errorMessage = "Houve um erro ao criar o terminal. Tente novamente.";
+            return false;
+         }
+
+         createdTerminalId = terminalResult.terminal.id;
+
+         return true;
+      }
+
+      /// <summary>
       /// Realiza o Login para o usuário através da
       /// API Login/Login do ControlPay.
       /// </summary>
@@ -359,6 +455,10 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          }
          catch(Exception ex)
          {
+            //Exception colocada no console para
+            //facilitar ao usuário verificar erros.
+            Debug.WriteLine($"CallPostApi: {ex}");
+
             errorMessage = ex.Message;
             return null;
          }

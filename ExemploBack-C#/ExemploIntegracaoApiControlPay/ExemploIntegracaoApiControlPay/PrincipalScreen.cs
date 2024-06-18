@@ -38,10 +38,7 @@ namespace ExemploIntegracaoApiControlPay
       /// </summary>
       public PrincipalScreen()
       {
-         //Estado inicial da propriedades.
-         ApiKey = string.Empty;
-         PersonId = string.Empty;
-         TerminalId = 0;
+         ClearPropValues();
 
          //Criando HttpClient.
          ApiHelper.CreateApiClient();
@@ -142,6 +139,8 @@ namespace ExemploIntegracaoApiControlPay
       /// <param name="e"></param>
       private void buttonAddKey_Click(object sender, EventArgs e)
       {
+         ClearPropValues();
+
          string personId = textBoxPersonIdInput.Text;
          string key = textBoxKeyInput.Text;
 
@@ -171,10 +170,73 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
+      /// <summary>
+      /// Clique do botão para criar um novo terminal atrelado ao
+      /// terminal físico (PdC) selecionado na lista.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void buttonCreateTerminal_Click(object sender, EventArgs e)
       {
-         //TODO Adicionar criação de Terminal
-         //TODO Ao adicionar terminal, setar como o terminal ativo
+         if(string.IsNullOrEmpty(ApiKey) || string.IsNullOrEmpty(PersonId))
+         {
+            MessageBox.Show("Para criar um terminal, é preciso primeiro ter uma chave de integração cadastrada na aplicação. Realize o login ou adicione uma chave.");
+
+            return;
+         }
+
+         //Valor de terminal físico a ser usado para o terminal.
+         string termFisIdString = comboBoxTerminaisFisicos.SelectedValue.ToString();
+         bool resultOk = int.TryParse(termFisIdString, out int termFisId);
+
+         if(!resultOk || termFisId == 0)
+         {
+            MessageBox.Show("Para criar um terminal, é preciso selecionar um terminal físico (PdC) antes. Selecione-o e tente novamente.");
+
+            return;
+         }
+
+         bool didCreateTerminal = ApiHelper.CreateTerminal(ApiKey,
+                                                           PersonId,
+                                                           termFisId,
+                                                           out string termStatusCode,
+                                                           out string termErrorMessage,
+                                                           out string createdTerminalId);
+
+         //Erro
+         if(!didCreateTerminal)
+         {
+            MessageBox.Show($"Ocorreu um erro durante a criação do terminal. A API de criação de terminais retornou {termStatusCode}, com a seguinte mensagem: {termErrorMessage}",
+                            "Erro ao criar terminal");
+
+            return;
+         }
+
+         //Repopulando as combos para
+         //apresentar os terminais atualizados.
+         PopulateComboboxes(ApiKey, PersonId);
+
+         //ID do terminal criado.
+         bool parseTermId = int.TryParse(createdTerminalId, out int termId);
+         if(string.IsNullOrEmpty(createdTerminalId) || !parseTermId)
+         {
+            MessageBox.Show("Ocorreu um erro ao verificar o ID do terminal criado. Verifique a lista de terminais e procure pelo terminal criado ou crie um novo terminal.",
+                            "Erro ao verificar o ID do terminal criado");
+         }
+         else
+         {
+            //Terminal a ser usado nas chamadas.
+            TerminalId = termId;
+
+            MessageBox.Show($"Terminal (ID: {termId}) criado com sucesso! Iremos recarregar as listas de terminais para refletir o novo terminal criado. Aguarde, por favor.",
+                            "Criar terminal");
+         }
+
+         //Seta o valor atual do TerminalId
+         //como sendo usado na UI.
+         SetCboxTerminalValue();
+
+         return;
       }
 
       /// <summary>
@@ -187,6 +249,8 @@ namespace ExemploIntegracaoApiControlPay
       /// <param name="e"></param>
       private void buttonLogin_Click(object sender, EventArgs e)
       {
+         ClearPropValues();
+
          string cpfCnpj = textBoxCpfCnpjInput.Text;
          string password = textBoxLoginPasswordInput.Text;
 
@@ -263,6 +327,35 @@ namespace ExemploIntegracaoApiControlPay
       #endregion Key Press
 
       #region ComboBox
+
+      /// <summary>
+      /// Evento para quando a comboBoxTerminais é modificada,
+      /// fechada ou tem seu valor alterado. Este método garante
+      /// que o valor atual da combo será o usado para o ID de
+      /// Terminal, caso seja válido.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void CboxTerminalSelected(object sender, EventArgs e)
+      {
+         try
+         {
+            string termIdString = comboBoxTerminais.SelectedValue.ToString();
+
+            bool resultOk = int.TryParse(termIdString, out int termId);
+
+            if(resultOk)
+            {
+               TerminalId = termId;
+               textBoxTerminalUsado.Text = termIdString;
+            }
+         }
+         catch(Exception)
+         {
+            TerminalId = 0;
+            textBoxTerminalUsado.Text = "...";
+         }
+      }
 
       /// <summary>
       /// Popula as ComboBoxes de Terminais
@@ -401,8 +494,41 @@ namespace ExemploIntegracaoApiControlPay
          }
       }
 
-      //TODO ao criar um terminal ou selecionar um na combobox, colocar ele como selecionado e preencher a labelTerminalUsado com o nome dele.
+      /// <summary>
+      /// Seta o valor atual da ComboBox de
+      /// Terminais como o valor atual do ID
+      /// de Terminal a ser usado nas chamadas.
+      /// </summary>
+      private void SetCboxTerminalValue()
+      {
+         try
+         {
+            comboBoxTerminais.SelectedValue = TerminalId.ToString();
+            textBoxTerminalUsado.Text = TerminalId.ToString();
+         }
+         catch(Exception ex)
+         {
+            //Exception colocada no console para
+            //facilitar ao usuário verificar erros.
+            Debug.WriteLine($"SetCboxTerminalValue: {ex}");
+
+            TerminalId = 0;
+            textBoxTerminalUsado.Text = "...";
+         }
+      }
 
       #endregion ComboBox
+
+      #region Private methods
+
+      private void ClearPropValues()
+      {
+         //Estado inicial da propriedades.
+         ApiKey = string.Empty;
+         PersonId = string.Empty;
+         TerminalId = 0;
+      }
+
+      #endregion Private methods
    }
 }
