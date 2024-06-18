@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="textBoxInfoStartAuto.Text" xml:space="preserve">
+    <value>Transações podem ser iniciadas automaticamente (iniciando o processamento no PayGo Windows assim que possível) ou não (deixando que o usuário as inicie na tela de "Transações" do próprio PGWin). O checkbox abaixo indica esta exata configuração.</value>
+  </data>
+  <data name="textBoxInfoTransacoes.Text" xml:space="preserve">
+    <value>Para realizar transações no ControlPay, algumas coisas são importantes:
+
+- É preciso ter tido sua conta configurada para permitir vendas. Isso é realizado pelo nosso time de relacionamento com o desenvolvedor. Caso ainda não tenha entrado em contato, peça que realizem estas configurações;
+
+- É preciso ter realizado as etapas anteriores deste exemplo resgate da chave de integração que permite usar as APIs, ter um PayGo Windows instalado (para uso TEF) e ter um terminal pronto para uso no ControlPay.
+
+Com tudo preparado, é possível realizar transações escolhendo os parâmetros abaixo e clicando no botão para transacionar.</value>
+  </data>
   <data name="textBoxExplainingText.Text" xml:space="preserve">
     <value>Esta aplicação é um exemplo de uso das APIs do ControlPay. para seu uso, é necessário primeiro que se tenha um usuário ativo e configurado no ControlPay, no ambiente de Sandbox (e também é recomendado que o portal esteja aberto para uso conjunto com este exemplo, para que haja uma maior clareza dos conceitos aqui mostrados).
 
@@ -135,18 +147,6 @@ Esta chave de integração pode ser adquirida usando o login de usuário (sendo 
     <value>Para realizar transações no ControlPay, é necessário possuir um terminal (e no caso de transações TEF, ele deve estar associado ao ponto de captura desejado). Terminais são como direcionamos as transações para os locais corretos na plataforma. É importante ressaltar que, no caso de transações TEF, é necessário que o PayGo Windows esteja aberto na máquina em que estiver instalado e que tenha sido ativado com o ponto de captura que será usado.
 
 Caso não tenha um terminal, selecione um terminal físico (que representa o ponto de captura, PdC, no ControlPay) a ser usado e, então, clique no botão para criar um terminal relacionado a este PDC.</value>
-  </data>
-  <data name="textBoxInfoStartAuto.Text" xml:space="preserve">
-    <value>Transações podem ser iniciadas automaticamente (iniciando o processamento no PayGo Windows assim que possível) ou não (deixando que o usuário as inicie na tela de "Transações" do próprio PGWin). O checkbox abaixo indica esta exata configuração.</value>
-  </data>
-  <data name="textBoxInfoTransacoes.Text" xml:space="preserve">
-    <value>Para realizar transações no ControlPay, algumas coisas são importantes:
-
-- É preciso ter tido sua conta configurada para permitir vendas. Isso é realizado pelo nosso time de relacionamento com o desenvolvedor. Caso ainda não tenha entrado em contato, peça que realizem estas configurações;
-
-- É preciso ter realizado as etapas anteriores deste exemplo resgate da chave de integração que permite usar as APIs, ter um PayGo Windows instalado (para uso TEF) e ter um terminal pronto para uso no ControlPay.
-
-Com tudo preparado, é possível realizar transações escolhendo os parâmetros abaixo e clicando no botão para transacionar.</value>
   </data>
   <data name="textBoxInfoAdministrativas.Text" xml:space="preserve">
     <value>O ControlPay também suporta chamadas de transações administrativas para TEF, utilizando o PayGo Windows. Para esta etapa, será preciso utilizar a senha técnica cadastrada no ControlPay. Caso não tenha cadastrado uma senha técnica, não preencha a caixa abaixo, assim usaremos uma senha padrão.</value>

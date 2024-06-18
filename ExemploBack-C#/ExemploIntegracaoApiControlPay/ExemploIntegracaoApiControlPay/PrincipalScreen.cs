@@ -98,52 +98,6 @@ namespace ExemploIntegracaoApiControlPay
 
       #endregion Load Screen
 
-      #region Link Click
-
-      /// <summary>
-      /// Evento de clique para o link que
-      /// redireciona o usuário para o portal
-      /// sandbox do ControlPay.
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
-      private void linkLabelSandboxControlPay_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-      {
-         Process.Start(e.Link.LinkData as string);
-      }
-
-      /// <summary>
-      /// Evento de clique para o link que
-      /// redireciona o usuário para a
-      /// documentação do ControlPay.
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
-      private void linkLabelDocs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-      {
-         Process.Start(e.Link.LinkData as string);
-      }
-
-      #endregion Link Click
-
-      #region Checkbox
-
-      /// <summary>
-      /// Evento da checkbox que muda o status
-      /// dos painéis dependendo da necessidade
-      /// do usuário (login ou uso de uma chave
-      /// que ele já possua).
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
-      private void checkBoxHasKey_CheckedChanged(object sender, EventArgs e)
-      {
-         panelDoesntHaveKey.Visible = !panelDoesntHaveKey.Visible;
-         panelHasKey.Visible = !panelHasKey.Visible;
-      }
-
-      #endregion Checkbox
-
       #region Button Click
 
       /// <summary>
@@ -322,26 +276,30 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
+      private void buttonTransacionar_Click(object sender, EventArgs e)
+      {
+
+      }
+
       #endregion Button Click
 
-      #region Key Press
+      #region Checkbox
 
       /// <summary>
-      /// Checa se o evento de KeyPress foi uma
-      /// tecla "Enter". Caso positivo, realiza
-      /// o clique do botão de Login.
+      /// Evento da checkbox que muda o status
+      /// dos painéis dependendo da necessidade
+      /// do usuário (login ou uso de uma chave
+      /// que ele já possua).
       /// </summary>
       /// <param name="sender"></param>
       /// <param name="e"></param>
-      private void CheckEnterKeyPressLogin(object sender, KeyPressEventArgs e)
+      private void checkBoxHasKey_CheckedChanged(object sender, EventArgs e)
       {
-         if(e.KeyChar == (char)Keys.Enter)
-         {
-            buttonLogin.PerformClick();
-         }
+         panelDoesntHaveKey.Visible = !panelDoesntHaveKey.Visible;
+         panelHasKey.Visible = !panelHasKey.Visible;
       }
 
-      #endregion Key Press
+      #endregion Checkbox
 
       #region ComboBox
 
@@ -535,6 +493,53 @@ namespace ExemploIntegracaoApiControlPay
       }
 
       #endregion ComboBox
+
+      #region Key Press
+
+      /// <summary>
+      /// Checa se o evento de KeyPress foi uma
+      /// tecla "Enter". Caso positivo, realiza
+      /// o clique do botão de Login.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void CheckEnterKeyPressLogin(object sender, KeyPressEventArgs e)
+      {
+         if(e.KeyChar == (char)Keys.Enter)
+         {
+            buttonLogin.PerformClick();
+         }
+      }
+
+      #endregion Key Press
+
+      #region Link Click
+
+      /// <summary>
+      /// Evento de clique para o link que
+      /// redireciona o usuário para o portal
+      /// sandbox do ControlPay.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void linkLabelSandboxControlPay_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+      {
+         Process.Start(e.Link.LinkData as string);
+      }
+
+      /// <summary>
+      /// Evento de clique para o link que
+      /// redireciona o usuário para a
+      /// documentação do ControlPay.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void linkLabelDocs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+      {
+         Process.Start(e.Link.LinkData as string);
+      }
+
+      #endregion Link Click
 
       #region TextBox
 

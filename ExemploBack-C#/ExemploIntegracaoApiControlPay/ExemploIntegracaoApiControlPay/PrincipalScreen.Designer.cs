@@ -589,6 +589,7 @@
          this.buttonTransacionar.TabIndex = 16;
          this.buttonTransacionar.Text = "Transacionar";
          this.buttonTransacionar.UseVisualStyleBackColor = false;
+         this.buttonTransacionar.Click += new System.EventHandler(this.buttonTransacionar_Click);
          // 
          // checkBoxStartAuto
          // 
