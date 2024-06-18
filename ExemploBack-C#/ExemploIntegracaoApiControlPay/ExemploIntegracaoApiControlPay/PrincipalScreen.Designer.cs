@@ -714,6 +714,7 @@
          this.buttonAdmin.TabIndex = 17;
          this.buttonAdmin.Text = "Iniciar administrativa";
          this.buttonAdmin.UseVisualStyleBackColor = false;
+         this.buttonAdmin.Click += new System.EventHandler(this.buttonAdmin_Click);
          // 
          // checkBoxStartAdminAuto
          // 
@@ -731,8 +732,10 @@
          // 
          this.textBoxTechPassword.Location = new System.Drawing.Point(306, 223);
          this.textBoxTechPassword.Name = "textBoxTechPassword";
+         this.textBoxTechPassword.PasswordChar = '*';
          this.textBoxTechPassword.Size = new System.Drawing.Size(182, 22);
          this.textBoxTechPassword.TabIndex = 15;
+         this.textBoxTechPassword.UseSystemPasswordChar = true;
          // 
          // labelSenhaTecnica
          // 

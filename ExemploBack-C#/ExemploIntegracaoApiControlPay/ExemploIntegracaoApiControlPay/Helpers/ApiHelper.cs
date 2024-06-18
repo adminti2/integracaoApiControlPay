@@ -15,7 +15,7 @@ namespace ExemploIntegracaoApiControlPay.Helpers
    /// </summary>
    public static class ApiHelper
    {
-      #region Public methods
+      #region HttpClient
 
       /// <summary>
       /// Http Client usado para chamadas de
@@ -37,6 +37,10 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          ApiClient.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
       }
+
+      #endregion HttpClient
+
+      #region Public methods
 
       /// <summary>
       /// Criação de um novo terminal para a pessoa
@@ -412,6 +416,128 @@ namespace ExemploIntegracaoApiControlPay.Helpers
          return true;
       }
 
+      /// <summary>
+      /// Realiza uma transação administrativa através da API
+      /// PagamentoExterno/InsertPagamentoExternoTipoAdmin.
+      /// </summary>
+      /// <param name="key">
+      /// Chave de integração.
+      /// </param>
+      /// <param name="terminalId">
+      /// ID do terminal que realizará
+      /// a transação administrativa.
+      /// </param>
+      /// <param name="techPassword">
+      /// Senha técnica da pessoa.
+      /// </param>
+      /// <param name="startAdminAuto">
+      /// Se a transação deve ou não ser
+      /// iniciada automaticamente.
+      /// </param>
+      /// <param name="statusCode">
+      /// Código de status da requisição
+      /// HTTP que será realizada.
+      /// </param>
+      /// <param name="errorMessage">
+      /// Possível mensagem de erro a ser
+      /// retornada pela API.
+      /// </param>
+      /// <param name="adminTransacId">
+      /// ID do pagamento externo que representa
+      /// a transação administrativa criada.
+      /// </param>
+      /// <returns>
+      /// Booleano indicando se a administrativa
+      /// foi ou não criada com sucesso.
+      /// </returns>
+      public static bool TransacAdmin(string key,
+                                      int terminalId,
+                                      string techPassword,
+                                      bool startAdminAuto,
+                                      out string statusCode,
+                                      out string errorMessage,
+                                      out string adminTransacId)
+      {
+         statusCode = string.Empty;
+         errorMessage = string.Empty;
+         adminTransacId = string.Empty;
+
+         string url = $"PagamentoExterno/InsertPagamentoExternoTipoAdmin?key={key}";
+
+         var adminBody = new
+         {
+            terminalId = terminalId,
+            senhaTecnica = techPassword,
+            aguardarTefIniciarTransacao = startAdminAuto
+         };
+
+         string json = JsonConvert.SerializeObject(adminBody);
+         var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+         //Escrevendo a chamada no console para facilitar
+         //a leitura do usuário que estiver debuggando.
+         Debug.WriteLine($"Chamada (URL) -> {url}");
+         Debug.WriteLine($"Chamada (body) -> {adminBody}");
+
+         HttpResponseMessage response = CallPostApi(url,
+                                                    httpContent,
+                                                    out statusCode,
+                                                    out string responseString,
+                                                    out errorMessage);
+
+         if(response == null)
+            return false;
+
+         var adminResult = JsonConvert.DeserializeObject<dynamic>(responseString);
+
+         if(!response.IsSuccessStatusCode)
+         {
+            errorMessage = adminResult.message;
+            return false;
+         }
+
+         if(adminResult.pagamentoExterno != null)
+            adminTransacId = adminResult.pagamentoExterno.id;
+
+         return true;
+      }
+
+      /// <summary>
+      /// Realiza uma venda no ControlPay
+      /// através da API Venda/Vender.
+      /// </summary>
+      /// <param name="key">
+      /// Chave de integração.
+      /// </param>
+      /// <param name="terminalId">
+      /// ID do terminal que realizará a venda.
+      /// </param>
+      /// <param name="paymentMethod">
+      /// Forma de pagamento usada na venda.
+      /// </param>
+      /// <param name="transacValue">
+      /// Valor da transação.
+      /// </param>
+      /// <param name="startAuto">
+      /// Se a transação deve ou não ser
+      /// iniciada automaticamente.
+      /// </param>
+      /// <param name="statusCode">
+      /// Código de status da requisição
+      /// HTTP que será realizada.
+      /// </param>
+      /// <param name="errorMessage">
+      /// Possível mensagem de erro a ser
+      /// retornada pela API.
+      /// </param>
+      /// <param name="intencaoVendaId">
+      /// ID da intenção de venda gerada
+      /// pelo uso da API.
+      /// </param>
+      /// <returns>
+      /// Booleano indicando se a intenção de
+      /// venda foi ou não criada com sucesso.
+      /// </returns>
       public static bool Vender(string key,
                                 int terminalId,
                                 int paymentMethod,

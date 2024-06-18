@@ -141,6 +141,67 @@ namespace ExemploIntegracaoApiControlPay
          return;
       }
 
+      private void buttonAdmin_Click(object sender, EventArgs e)
+      {
+         if(string.IsNullOrEmpty(ApiKey) || string.IsNullOrEmpty(PersonId) || TerminalId < 1)
+         {
+            MessageBox.Show("Para realizar uma transação administrativa, é preciso primeiro ter uma chave de integração cadastrada na aplicação e um terminal válido. Realize o login ou adicione uma chave, e escolha um terminal para transacionar.",
+                            "Administrativa");
+
+            return;
+         }
+
+         //Senha técnica:
+         string techPassword = textBoxTechPassword.Text;
+
+         //A senha técnica não é necessária nessa chamada caso ela
+         //não tenha sido cadastrada. Contudo, é padrão do nosso
+         //relacionamento com desenvolvedor cadastrar esta como
+         //uma senha padrão: "314159". Sendo assim, caso não tenha
+         //sido cadastrada uma nova senha, este valor será usado para esta chamada.
+         if(string.IsNullOrEmpty(techPassword))
+            techPassword = "314159";
+
+         //Iniciar administrativa automaticamente:
+         bool startAdminAuto = checkBoxStartAdminAuto.Checked;
+
+         MessageBox.Show("Sua transação administrativa será criada agora."
+                              + Environment.NewLine + "Atente-se ao fato de que, para transações TEF, o PayGo Windows deve estar aberto e rodando antes de prosseguir.",
+                         "Administrativa");
+
+         //Venda/Vender
+         bool didCreateAdmin = ApiHelper.TransacAdmin(ApiKey,
+                                                      TerminalId,
+                                                      techPassword,
+                                                      startAdminAuto,
+                                                      out string adminStatusCode,
+                                                      out string adminErrorMessage,
+                                                      out string transacAdminId);
+
+         //Erro
+         if(!didCreateAdmin)
+         {
+            MessageBox.Show($"Ocorreu um erro criar uma transação administrativa. A API de pagamentos externos admin retornou {adminStatusCode}, com a seguinte mensagem: {adminErrorMessage}",
+                            "Erro ao criar transação administrativa");
+
+            return;
+         }
+
+         //Mensagem de retorno ao usuário
+         string okMessage = "Transação administrativa";
+
+         if(!string.IsNullOrEmpty(transacAdminId))
+            okMessage += $" [ID {transacAdminId}]";
+
+         okMessage += " criada com sucesso!"
+            + Environment.NewLine + "Verifique o PayGo Windows instalado e continue a transação nele.";
+
+         MessageBox.Show(okMessage,
+                         "Administrativa");
+
+         return;
+      }
+
       /// <summary>
       /// Clique do botão para criar um novo terminal atrelado ao
       /// terminal físico (PdC) selecionado na lista.
@@ -335,11 +396,12 @@ namespace ExemploIntegracaoApiControlPay
          if(!didCreateIntencaoVenda)
          {
             MessageBox.Show($"Ocorreu um erro criar uma intenção de venda. A API de venda retornou {vendaStatusCode}, com a seguinte mensagem: {vendaErrorMessage}",
-                            "Erro ao intenção de venda");
+                            "Erro ao criar intenção de venda");
 
             return;
          }
 
+         //Mensagem de retorno ao usuário
          string okMessage = "Intenção de venda";
          
          if(!string.IsNullOrEmpty(intencaoVendaId))
