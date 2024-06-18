@@ -338,7 +338,7 @@ namespace ExemploIntegracaoApiControlPay
          string okMessage = "Intenção de venda";
          
          if(!string.IsNullOrEmpty(intencaoVendaId))
-            okMessage += $" de ID {intencaoVendaId}";
+            okMessage += $" [ID {intencaoVendaId}]";
 
          okMessage += " criada com sucesso!"
             + Environment.NewLine + "Caso tenha realizado uma transação TEF, verifique o PayGo Windows instalado e continue a transação nele."
