@@ -1,8 +1,11 @@
 ﻿using ExemploIntegracaoApiControlPay.Helpers;
 using ExemploIntegracaoApiControlPay.Objects;
+using ExemploIntegracaoApiControlPay.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ExemploIntegracaoApiControlPay
@@ -49,6 +52,20 @@ namespace ExemploIntegracaoApiControlPay
          //Adicionando KeyPress de Enter para os inputs.
          this.textBoxCpfCnpjInput.KeyPress += new KeyPressEventHandler(CheckEnterKeyPressLogin);
          this.textBoxLoginPasswordInput.KeyPress += new KeyPressEventHandler(CheckEnterKeyPressLogin);
+
+         //Adicionando formas de pagamento à sua ComboBox.
+         Dictionary<int, string> formasPagamento = new Dictionary<int, string>();
+         foreach(Enums.FormaPagamento fpg in Enum.GetValues(typeof(Enums.FormaPagamento)))
+         {
+            formasPagamento.Add((int)fpg, fpg.GetDescription());
+         }
+         comboBoxFormaPagamento.DataSource = formasPagamento.ToArray();
+         comboBoxFormaPagamento.DisplayMember = "Value";
+         comboBoxFormaPagamento.ValueMember = "Key";
+         comboBoxFormaPagamento.DropDownStyle = ComboBoxStyle.DropDownList;
+
+         //Selecionando TEF Crédito como a opção default
+         comboBoxFormaPagamento.SelectedValue = (int)Enums.FormaPagamento.TefCredito;
       }
 
       #endregion Constructor
@@ -518,6 +535,32 @@ namespace ExemploIntegracaoApiControlPay
       }
 
       #endregion ComboBox
+
+      #region TextBox
+
+      /// <summary>
+      /// Formatação para a textBoxValorTransacao,
+      /// deixando seu texto em formato de moeda
+      /// (porém sem o símbolo "R$").
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void textBoxValorTransacao_Leave(object sender, EventArgs e)
+      {
+         //Retira o "R$" para facilitar no envio para API.
+         NumberFormatInfo nfi = CultureInfo.CurrentCulture.NumberFormat;
+         nfi = (NumberFormatInfo)nfi.Clone();
+         nfi.CurrencySymbol = "";
+
+         //Formatação em moeda.
+         double value;
+         if(double.TryParse(textBoxValorTransacao.Text, out value))
+            textBoxValorTransacao.Text = string.Format(nfi, "{0:C2}", value).Trim();
+         else
+            textBoxValorTransacao.Text = string.Empty;
+      }
+
+      #endregion TextBox
 
       #region Private methods
 

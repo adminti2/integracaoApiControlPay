@@ -622,6 +622,7 @@
          this.textBoxValorTransacao.Name = "textBoxValorTransacao";
          this.textBoxValorTransacao.Size = new System.Drawing.Size(220, 22);
          this.textBoxValorTransacao.TabIndex = 13;
+         this.textBoxValorTransacao.Leave += new System.EventHandler(this.textBoxValorTransacao_Leave);
          // 
          // labelValorTransacao
          // 
